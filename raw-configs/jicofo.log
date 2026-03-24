@@ -1,0 +1,200 @@
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:326)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:321)
+	at java.base/sun.security.ssl.CertificateMessage$T13CertificateConsumer.checkServerCerts(CertificateMessage.java:1294)
+	at java.base/sun.security.ssl.CertificateMessage$T13CertificateConsumer.onConsumeCertificate(CertificateMessage.java:1169)
+	at java.base/sun.security.ssl.CertificateMessage$T13CertificateConsumer.consume(CertificateMessage.java:1112)
+	at java.base/sun.security.ssl.SSLHandshake.consume(SSLHandshake.java:396)
+	at java.base/sun.security.ssl.HandshakeContext.dispatch(HandshakeContext.java:481)
+	at java.base/sun.security.ssl.HandshakeContext.dispatch(HandshakeContext.java:459)
+	at java.base/sun.security.ssl.TransportContext.dispatch(TransportContext.java:206)
+	at java.base/sun.security.ssl.SSLTransport.decode(SSLTransport.java:172)
+	at java.base/sun.security.ssl.SSLSocketImpl.decode(SSLSocketImpl.java:1510)
+	at java.base/sun.security.ssl.SSLSocketImpl.readHandshakeRecord(SSLSocketImpl.java:1425)
+	at java.base/sun.security.ssl.SSLSocketImpl.startHandshake(SSLSocketImpl.java:455)
+	at java.base/sun.security.ssl.SSLSocketImpl.startHandshake(SSLSocketImpl.java:426)
+	at org.jivesoftware.smack.tcp.XMPPTCPConnection.proceedTLSReceived(XMPPTCPConnection.java:733)
+	at org.jivesoftware.smack.tcp.XMPPTCPConnection.access$1400(XMPPTCPConnection.java:131)
+	at org.jivesoftware.smack.tcp.XMPPTCPConnection$PacketReader.parsePackets(XMPPTCPConnection.java:990)
+	at org.jivesoftware.smack.tcp.XMPPTCPConnection$PacketReader.access$700(XMPPTCPConnection.java:916)
+	at org.jivesoftware.smack.tcp.XMPPTCPConnection$PacketReader$1.run(XMPPTCPConnection.java:939)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+	at java.base/sun.security.validator.PKIXValidator.doBuild(PKIXValidator.java:439)
+	at java.base/sun.security.validator.PKIXValidator.engineValidate(PKIXValidator.java:306)
+	at java.base/sun.security.validator.Validator.validate(Validator.java:264)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkTrusted(X509TrustManagerImpl.java:231)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkServerTrusted(X509TrustManagerImpl.java:132)
+	at java.base/sun.security.ssl.CertificateMessage$T13CertificateConsumer.checkServerCerts(CertificateMessage.java:1278)
+	... 17 more
+Caused by: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+	at java.base/sun.security.provider.certpath.SunCertPathBuilder.build(SunCertPathBuilder.java:148)
+	at java.base/sun.security.provider.certpath.SunCertPathBuilder.engineBuild(SunCertPathBuilder.java:129)
+	at java.base/java.security.cert.CertPathBuilder.build(CertPathBuilder.java:297)
+	at java.base/sun.security.validator.PKIXValidator.doBuild(PKIXValidator.java:434)
+	... 22 more
+Jicofo 2026-03-23 19:21:49.057 SEVERE: [19] [xmpp_connection=client] XmppProvider.doConnect#219: Failed to connect/login: javax.net.ssl.SSLHandshakeException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+org.jivesoftware.smack.SmackException$SmackWrappedException: javax.net.ssl.SSLHandshakeException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+	at org.jivesoftware.smack.AbstractXMPPConnection.setCurrentConnectionExceptionAndNotify(AbstractXMPPConnection.java:686)
+	at org.jivesoftware.smack.AbstractXMPPConnection.notifyConnectionError(AbstractXMPPConnection.java:986)
+	at org.jivesoftware.smack.tcp.XMPPTCPConnection.access$4100(XMPPTCPConnection.java:131)
+	at org.jivesoftware.smack.tcp.XMPPTCPConnection$PacketReader.parsePackets(XMPPTCPConnection.java:1167)
+	at org.jivesoftware.smack.tcp.XMPPTCPConnection$PacketReader.access$700(XMPPTCPConnection.java:916)
+	at org.jivesoftware.smack.tcp.XMPPTCPConnection$PacketReader$1.run(XMPPTCPConnection.java:939)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: javax.net.ssl.SSLHandshakeException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+	at java.base/sun.security.ssl.Alert.createSSLException(Alert.java:131)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:383)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:326)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:321)
+	at java.base/sun.security.ssl.CertificateMessage$T13CertificateConsumer.checkServerCerts(CertificateMessage.java:1294)
+	at java.base/sun.security.ssl.CertificateMessage$T13CertificateConsumer.onConsumeCertificate(CertificateMessage.java:1169)
+	at java.base/sun.security.ssl.CertificateMessage$T13CertificateConsumer.consume(CertificateMessage.java:1112)
+	at java.base/sun.security.ssl.SSLHandshake.consume(SSLHandshake.java:396)
+	at java.base/sun.security.ssl.HandshakeContext.dispatch(HandshakeContext.java:481)
+	at java.base/sun.security.ssl.HandshakeContext.dispatch(HandshakeContext.java:459)
+	at java.base/sun.security.ssl.TransportContext.dispatch(TransportContext.java:206)
+	at java.base/sun.security.ssl.SSLTransport.decode(SSLTransport.java:172)
+	at java.base/sun.security.ssl.SSLSocketImpl.decode(SSLSocketImpl.java:1510)
+	at java.base/sun.security.ssl.SSLSocketImpl.readHandshakeRecord(SSLSocketImpl.java:1425)
+	at java.base/sun.security.ssl.SSLSocketImpl.startHandshake(SSLSocketImpl.java:455)
+	at java.base/sun.security.ssl.SSLSocketImpl.startHandshake(SSLSocketImpl.java:426)
+	at org.jivesoftware.smack.tcp.XMPPTCPConnection.proceedTLSReceived(XMPPTCPConnection.java:733)
+	at org.jivesoftware.smack.tcp.XMPPTCPConnection.access$1400(XMPPTCPConnection.java:131)
+	at org.jivesoftware.smack.tcp.XMPPTCPConnection$PacketReader.parsePackets(XMPPTCPConnection.java:990)
+	... 3 more
+Caused by: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+	at java.base/sun.security.validator.PKIXValidator.doBuild(PKIXValidator.java:439)
+	at java.base/sun.security.validator.PKIXValidator.engineValidate(PKIXValidator.java:306)
+	at java.base/sun.security.validator.Validator.validate(Validator.java:264)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkTrusted(X509TrustManagerImpl.java:231)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkServerTrusted(X509TrustManagerImpl.java:132)
+	at java.base/sun.security.ssl.CertificateMessage$T13CertificateConsumer.checkServerCerts(CertificateMessage.java:1278)
+	... 17 more
+Caused by: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+	at java.base/sun.security.provider.certpath.SunCertPathBuilder.build(SunCertPathBuilder.java:148)
+	at java.base/sun.security.provider.certpath.SunCertPathBuilder.engineBuild(SunCertPathBuilder.java:129)
+	at java.base/java.security.cert.CertPathBuilder.build(CertPathBuilder.java:297)
+	at java.base/sun.security.validator.PKIXValidator.doBuild(PKIXValidator.java:434)
+	... 22 more
+Jicofo 2026-03-23 19:21:49.057 WARNING: [117] org.jivesoftware.smack.AbstractXMPPConnection.callConnectionClosedOnErrorListener: Connection XMPPTCPConnection[not-authenticated] (0) closed with error
+javax.net.ssl.SSLHandshakeException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+	at java.base/sun.security.ssl.Alert.createSSLException(Alert.java:131)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:383)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:326)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:321)
+	at java.base/sun.security.ssl.CertificateMessage$T13CertificateConsumer.checkServerCerts(CertificateMessage.java:1294)
+	at java.base/sun.security.ssl.CertificateMessage$T13CertificateConsumer.onConsumeCertificate(CertificateMessage.java:1169)
+	at java.base/sun.security.ssl.CertificateMessage$T13CertificateConsumer.consume(CertificateMessage.java:1112)
+	at java.base/sun.security.ssl.SSLHandshake.consume(SSLHandshake.java:396)
+	at java.base/sun.security.ssl.HandshakeContext.dispatch(HandshakeContext.java:481)
+	at java.base/sun.security.ssl.HandshakeContext.dispatch(HandshakeContext.java:459)
+	at java.base/sun.security.ssl.TransportContext.dispatch(TransportContext.java:206)
+	at java.base/sun.security.ssl.SSLTransport.decode(SSLTransport.java:172)
+	at java.base/sun.security.ssl.SSLSocketImpl.decode(SSLSocketImpl.java:1510)
+	at java.base/sun.security.ssl.SSLSocketImpl.readHandshakeRecord(SSLSocketImpl.java:1425)
+	at java.base/sun.security.ssl.SSLSocketImpl.startHandshake(SSLSocketImpl.java:455)
+	at java.base/sun.security.ssl.SSLSocketImpl.startHandshake(SSLSocketImpl.java:426)
+	at org.jivesoftware.smack.tcp.XMPPTCPConnection.proceedTLSReceived(XMPPTCPConnection.java:733)
+	at org.jivesoftware.smack.tcp.XMPPTCPConnection.access$1400(XMPPTCPConnection.java:131)
+	at org.jivesoftware.smack.tcp.XMPPTCPConnection$PacketReader.parsePackets(XMPPTCPConnection.java:990)
+	at org.jivesoftware.smack.tcp.XMPPTCPConnection$PacketReader.access$700(XMPPTCPConnection.java:916)
+	at org.jivesoftware.smack.tcp.XMPPTCPConnection$PacketReader$1.run(XMPPTCPConnection.java:939)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+	at java.base/sun.security.validator.PKIXValidator.doBuild(PKIXValidator.java:439)
+	at java.base/sun.security.validator.PKIXValidator.engineValidate(PKIXValidator.java:306)
+	at java.base/sun.security.validator.Validator.validate(Validator.java:264)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkTrusted(X509TrustManagerImpl.java:231)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkServerTrusted(X509TrustManagerImpl.java:132)
+	at java.base/sun.security.ssl.CertificateMessage$T13CertificateConsumer.checkServerCerts(CertificateMessage.java:1278)
+	... 17 more
+Caused by: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+	at java.base/sun.security.provider.certpath.SunCertPathBuilder.build(SunCertPathBuilder.java:148)
+	at java.base/sun.security.provider.certpath.SunCertPathBuilder.engineBuild(SunCertPathBuilder.java:129)
+	at java.base/java.security.cert.CertPathBuilder.build(CertPathBuilder.java:297)
+	at java.base/sun.security.validator.PKIXValidator.doBuild(PKIXValidator.java:434)
+	... 22 more
+Jicofo 2026-03-23 19:21:49.057 WARNING: [19] [xmpp_connection=client] XmppProvider.scheduleConnectTask$lambda$3$lambda$2#113: Failed to connect, will re-try after 1 second
+Jicofo 2026-03-23 19:21:49.102 WARNING: [29] [xmpp_connection=client] XmppProvider.setComponents#80: Discovered components: [Component(type=breakout_rooms, address=breakout.jitsi-00.zitovoice.com), Component(type=polls, address=polls.jitsi-00.zitovoice.com), Component(type=room_metadata, address=metadata.jitsi-00.zitovoice.com), Component(type=file-sharing, address=filesharing.jitsi-00.zitovoice.com), Component(type=av_moderation, address=avmoderation.jitsi-00.zitovoice.com), Component(type=speakerstats, address=speakerstats.jitsi-00.zitovoice.com), Component(type=end_conference, address=endconference.jitsi-00.zitovoice.com), Component(type=conference_duration, address=conferenceduration.jitsi-00.zitovoice.com), Component(type=lobbyrooms, address=lobby.jitsi-00.zitovoice.com)]
+Jicofo 2026-03-23 19:21:49.173 INFO: [1] [xmpp_connection=client] XmppProvider.shutdown#177: Disconnected.
+Jicofo 2026-03-23 19:21:49.174 INFO: [1] Main.main#126: Jicofo has been stopped, exiting with exit code 143
+Jicofo 2026-03-23 19:21:54.263 WARNING: [39] org.jivesoftware.smack.AbstractXMPPConnection.callConnectionClosedOnErrorListener: Connection XMPPTCPConnection[focus@auth.jitsi-00.zitovoice.com/focus] (0) closed with error
+org.jivesoftware.smack.xml.XmlPullParserException: javax.xml.stream.XMLStreamException: ParseError at [row,col]:[1,9373]
+Message: XML document structures must start and end within the same entity.
+	at org.jivesoftware.smack.xml.stax.StaxXmlPullParser.next(StaxXmlPullParser.java:193)
+	at org.jivesoftware.smack.tcp.XMPPTCPConnection$PacketReader.parsePackets(XMPPTCPConnection.java:1143)
+	at org.jivesoftware.smack.tcp.XMPPTCPConnection$PacketReader.access$700(XMPPTCPConnection.java:916)
+	at org.jivesoftware.smack.tcp.XMPPTCPConnection$PacketReader$1.run(XMPPTCPConnection.java:939)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: javax.xml.stream.XMLStreamException: ParseError at [row,col]:[1,9373]
+Message: XML document structures must start and end within the same entity.
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLStreamReaderImpl.next(XMLStreamReaderImpl.java:652)
+	at org.jivesoftware.smack.xml.stax.StaxXmlPullParser.next(StaxXmlPullParser.java:191)
+	... 4 more
+Jicofo 2026-03-23 19:21:54.270 SEVERE: [39] [xmpp_connection=client] XmppProvider$connectionListener$1.connectionClosedOnError#155: XMPP connection closed on error: javax.xml.stream.XMLStreamException: ParseError at [row,col]:[1,9373]
+Message: XML document structures must start and end within the same entity.
+org.jivesoftware.smack.xml.XmlPullParserException: javax.xml.stream.XMLStreamException: ParseError at [row,col]:[1,9373]
+Message: XML document structures must start and end within the same entity.
+	at org.jivesoftware.smack.xml.stax.StaxXmlPullParser.next(StaxXmlPullParser.java:193)
+	at org.jivesoftware.smack.tcp.XMPPTCPConnection$PacketReader.parsePackets(XMPPTCPConnection.java:1143)
+	at org.jivesoftware.smack.tcp.XMPPTCPConnection$PacketReader.access$700(XMPPTCPConnection.java:916)
+	at org.jivesoftware.smack.tcp.XMPPTCPConnection$PacketReader$1.run(XMPPTCPConnection.java:939)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: javax.xml.stream.XMLStreamException: ParseError at [row,col]:[1,9373]
+Message: XML document structures must start and end within the same entity.
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLStreamReaderImpl.next(XMLStreamReaderImpl.java:652)
+	at org.jivesoftware.smack.xml.stax.StaxXmlPullParser.next(StaxXmlPullParser.java:191)
+	... 4 more
+Jicofo 2026-03-23 19:21:56.430 SEVERE: [40] [xmpp_connection=client] XmppProvider$reconnectionListener$1.reconnectionFailed#94: XMPP reconnection failed: unsupported-stanza-type You can read more about the meaning of this stream error at http://xmpp.org/rfcs/rfc6120.html#streams-error-conditions
+<stream:error><unsupported-stanza-type xmlns='urn:ietf:params:xml:ns:xmpp-streams'/></stream:error>
+org.jivesoftware.smack.XMPPException$StreamErrorException: unsupported-stanza-type You can read more about the meaning of this stream error at http://xmpp.org/rfcs/rfc6120.html#streams-error-conditions
+<stream:error><unsupported-stanza-type xmlns='urn:ietf:params:xml:ns:xmpp-streams'/></stream:error>
+	at org.jivesoftware.smack.tcp.XMPPTCPConnection$PacketReader.parsePackets(XMPPTCPConnection.java:984)
+	at org.jivesoftware.smack.tcp.XMPPTCPConnection$PacketReader.access$700(XMPPTCPConnection.java:916)
+	at org.jivesoftware.smack.tcp.XMPPTCPConnection$PacketReader$1.run(XMPPTCPConnection.java:939)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Jicofo 2026-03-23 19:21:56.434 WARNING: [43] org.jivesoftware.smack.AbstractXMPPConnection.callConnectionClosedOnErrorListener: Connection XMPPTCPConnection[focus@auth.jitsi-00.zitovoice.com/focus] (0) closed with error
+org.jivesoftware.smack.XMPPException$StreamErrorException: unsupported-stanza-type You can read more about the meaning of this stream error at http://xmpp.org/rfcs/rfc6120.html#streams-error-conditions
+<stream:error><unsupported-stanza-type xmlns='urn:ietf:params:xml:ns:xmpp-streams'/></stream:error>
+	at org.jivesoftware.smack.tcp.XMPPTCPConnection$PacketReader.parsePackets(XMPPTCPConnection.java:984)
+	at org.jivesoftware.smack.tcp.XMPPTCPConnection$PacketReader.access$700(XMPPTCPConnection.java:916)
+	at org.jivesoftware.smack.tcp.XMPPTCPConnection$PacketReader$1.run(XMPPTCPConnection.java:939)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Jicofo 2026-03-23 19:21:56.435 SEVERE: [43] [xmpp_connection=client] XmppProvider$connectionListener$1.connectionClosedOnError#155: XMPP connection closed on error: unsupported-stanza-type You can read more about the meaning of this stream error at http://xmpp.org/rfcs/rfc6120.html#streams-error-conditions
+<stream:error><unsupported-stanza-type xmlns='urn:ietf:params:xml:ns:xmpp-streams'/></stream:error>
+org.jivesoftware.smack.XMPPException$StreamErrorException: unsupported-stanza-type You can read more about the meaning of this stream error at http://xmpp.org/rfcs/rfc6120.html#streams-error-conditions
+<stream:error><unsupported-stanza-type xmlns='urn:ietf:params:xml:ns:xmpp-streams'/></stream:error>
+	at org.jivesoftware.smack.tcp.XMPPTCPConnection$PacketReader.parsePackets(XMPPTCPConnection.java:984)
+	at org.jivesoftware.smack.tcp.XMPPTCPConnection$PacketReader.access$700(XMPPTCPConnection.java:916)
+	at org.jivesoftware.smack.tcp.XMPPTCPConnection$PacketReader$1.run(XMPPTCPConnection.java:939)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Jicofo 2026-03-23 19:21:56.613 WARNING: [27] [xmpp_connection=client] XmppProvider.setComponents#80: Discovered components: [Component(type=lobbyrooms, address=lobby.jitsi-00.zitovoice.com), Component(type=conference_duration, address=conferenceduration.jitsi-00.zitovoice.com), Component(type=av_moderation, address=avmoderation.jitsi-00.zitovoice.com), Component(type=room_metadata, address=metadata.jitsi-00.zitovoice.com), Component(type=end_conference, address=endconference.jitsi-00.zitovoice.com), Component(type=speakerstats, address=speakerstats.jitsi-00.zitovoice.com), Component(type=breakout_rooms, address=breakout.jitsi-00.zitovoice.com)]
+Jicofo 2026-03-23 19:22:11.611 SEVERE: [35] [room=jvbbrewery@internal.auth.jitsi-00.zitovoice.com] ChatRoomImpl.leave$lambda$25#430: Failed to properly leave MUC: jvbbrewery@internal.auth.jitsi-00.zitovoice.com(focus@auth.jitsi-00.zitovoice.com/focus)
+org.jivesoftware.smack.SmackException$NoResponseException: No response received within reply timeout. Timeout was 15000ms (~15s). StanzaCollector has been cancelled. Waited for response using: AndFilter: (StanzaTypeFilter: Presence, OrFilter: (AndFilter: (FromMatchesFilter (full): jvbbrewery@internal.auth.jitsi-00.zitovoice.com/focus, PresenceTypeFilter: type=unavailable, MUCUserStatusCodeFilter: status=110), AndFilter: (FromMatchesFilter (ignoreResourcepart): jvbbrewery@internal.auth.jitsi-00.zitovoice.com, PresenceTypeFilter: type=error))).
+	at org.jivesoftware.smack.SmackException$NoResponseException.newWith(SmackException.java:124)
+	at org.jivesoftware.smack.SmackException$NoResponseException.newWith(SmackException.java:104)
+	at org.jivesoftware.smack.StanzaCollector.nextResultOrThrow(StanzaCollector.java:281)
+	at org.jivesoftware.smack.StanzaCollector.nextResultOrThrow(StanzaCollector.java:228)
+	at org.jivesoftware.smackx.muc.MultiUserChat.leave(MultiUserChat.java:798)
+	at org.jitsi.jicofo.xmpp.muc.ChatRoomImpl.leave$lambda$25(ChatRoomImpl.kt:417)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Jicofo 2026-03-23 19:22:11.657 SEVERE: [29] [type=bridge brewery=jvbbrewery] BaseBrewery.start#203: Failed to create room.
+org.jivesoftware.smack.XMPPException$XMPPErrorException: XMPP error reply received from jvbbrewery@internal.auth.jitsi-00.zitovoice.com: XMPPError: forbidden - auth [Only owners can configure rooms]
+	at org.jivesoftware.smack.XMPPException$XMPPErrorException.ifHasErrorThenThrow(XMPPException.java:171)
+	at org.jivesoftware.smack.XMPPException$XMPPErrorException.ifHasErrorThenThrow(XMPPException.java:165)
+	at org.jivesoftware.smack.StanzaCollector.nextResultOrThrow(StanzaCollector.java:284)
+	at org.jivesoftware.smack.StanzaCollector.nextResultOrThrow(StanzaCollector.java:228)
+	at org.jivesoftware.smackx.muc.MultiUserChat.getConfigurationForm(MultiUserChat.java:844)
+	at org.jitsi.jicofo.xmpp.muc.ChatRoomImpl.joinAs(ChatRoomImpl.kt:332)
+	at org.jitsi.jicofo.xmpp.muc.ChatRoomImpl.join(ChatRoomImpl.kt:294)
+	at org.jitsi.jicofo.xmpp.BaseBrewery.start(BaseBrewery.java:197)
+	at org.jitsi.jicofo.xmpp.BaseBrewery.maybeStart(BaseBrewery.java:137)
+	at org.jitsi.jicofo.xmpp.BaseBrewery.registrationChanged(BaseBrewery.java:172)
+	at org.jitsi.jicofo.xmpp.XmppProvider.fireRegistrationStateChanged$lambda$9$lambda$8(XmppProvider.kt:247)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)

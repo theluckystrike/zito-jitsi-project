@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sprint Report — Jitsi Video Conferencing Platform</title>
+  <style>
+    /* ===== Reset & Base ===== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      font-size: 16px;
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+        Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+      color: #1a1a1a;
+      background: #ffffff;
+      line-height: 1.7;
+      letter-spacing: -0.011em;
+    }
+
+    /* ===== Layout ===== */
+    .page-wrapper {
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .toc-sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 240px;
+      height: 100vh;
+      padding: 48px 20px 32px 24px;
+      overflow-y: auto;
+      border-right: 1px solid #e5e7eb;
+      background: #fafafa;
+      z-index: 100;
+    }
+
+    .toc-sidebar .toc-title {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #6b7280;
+      margin-bottom: 16px;
+    }
+
+    .toc-sidebar nav ul {
+      list-style: none;
+    }
+
+    .toc-sidebar nav ul li {
+      margin-bottom: 4px;
+    }
+
+    .toc-sidebar nav ul li a {
+      display: block;
+      padding: 5px 10px;
+      font-size: 0.82rem;
+      font-weight: 450;
+      color: #4b5563;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: background 0.15s ease, color 0.15s ease;
+      line-height: 1.45;
+    }
+
+    .toc-sidebar nav ul li a:hover {
+      background: #e5e7eb;
+      color: #1a1a1a;
+    }
+
+    .toc-sidebar nav ul li a.active {
+      background: #e8f4f8;
+      color: #0066cc;
+      font-weight: 550;
+    }
+
+    .main-content {
+      max-width: 860px;
+      width: 100%;
+      margin-left: 240px;
+      padding: 48px 40px 80px 40px;
+    }
+
+    /* ===== Section Styling ===== */
+    .report-section {
+      margin-bottom: 56px;
+      padding-bottom: 56px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .report-section:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .report-section.alt-bg {
+      background: #f8f9fa;
+      margin-left: -40px;
+      margin-right: -40px;
+      padding-left: 40px;
+      padding-right: 40px;
+      padding-top: 40px;
+      border-radius: 0;
+    }
+
+    /* ===== Typography ===== */
+    h1 {
+      font-size: 2.25rem;
+      font-weight: 700;
+      letter-spacing: -0.035em;
+      line-height: 1.2;
+      margin-bottom: 8px;
+      color: #1a1a1a;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 650;
+      letter-spacing: -0.025em;
+      line-height: 1.3;
+      margin-bottom: 20px;
+      color: #1a1a1a;
+    }
+
+    h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      letter-spacing: -0.015em;
+      line-height: 1.4;
+      margin-bottom: 12px;
+      margin-top: 32px;
+      color: #1a1a1a;
+    }
+
+    h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #374151;
+    }
+
+    p {
+      margin-bottom: 16px;
+      color: #374151;
+    }
+
+    a {
+      color: #0066cc;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.15s ease;
+    }
+
+    a:hover {
+      border-bottom-color: #0066cc;
+    }
+
+    strong {
+      font-weight: 600;
+      color: #1a1a1a;
+    }
+
+    ul, ol {
+      margin-bottom: 16px;
+      padding-left: 24px;
+    }
+
+    li {
+      margin-bottom: 6px;
+      color: #374151;
+    }
+
+    /* ===== Metadata / Subtitle ===== */
+    .meta-line {
+      font-size: 0.9rem;
+      color: #6b7280;
+      margin-bottom: 4px;
+      font-weight: 400;
+    }
+
+    .meta-block {
+      margin-top: 16px;
+      margin-bottom: 32px;
+    }
+
+    /* ===== Callouts ===== */
+    .callout {
+      padding: 16px 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 0.92rem;
+      line-height: 1.65;
+      border-left: 4px solid transparent;
+    }
+
+    .callout-info {
+      background: #e8f4f8;
+      border-left-color: #0066cc;
+    }
+
+    .callout-warning {
+      background: #fff3cd;
+      border-left-color: #d4a017;
+    }
+
+    .callout-success {
+      background: #d4edda;
+      border-left-color: #28a745;
+    }
+
+    .callout p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* ===== Code Blocks ===== */
+    pre {
+      background: #1e1e2e;
+      color: #cdd6f4;
+      padding: 20px 24px;
+      border-radius: 10px;
+      overflow-x: auto;
+      margin-bottom: 20px;
+      font-size: 0.84rem;
+      line-height: 1.65;
+      font-family: 'SF Mono', 'Fira Code', 'JetBrains Mono', 'Cascadia Code',
+        Menlo, Monaco, Consolas, monospace;
+      border: 1px solid #2a2a3e;
+    }
+
+    code {
+      font-family: 'SF Mono', 'Fira Code', 'JetBrains Mono', 'Cascadia Code',
+        Menlo, Monaco, Consolas, monospace;
+      font-size: 0.88em;
+    }
+
+    .code-inline {
+      background: #f1f3f5;
+      padding: 2px 7px;
+      border-radius: 5px;
+      font-size: 0.84em;
+      color: #d6336c;
+      border: 1px solid #e5e7eb;
+      font-family: 'SF Mono', 'Fira Code', 'JetBrains Mono', 'Cascadia Code',
+        Menlo, Monaco, Consolas, monospace;
+    }
+
+    p code, li code, td code {
+      background: #f1f3f5;
+      padding: 2px 7px;
+      border-radius: 5px;
+      font-size: 0.84em;
+      color: #d6336c;
+      border: 1px solid #e5e7eb;
+    }
+
+    /* Syntax Highlight Classes */
+    .syn-keyword   { color: #cba6f7; }
+    .syn-string    { color: #a6e3a1; }
+    .syn-comment   { color: #6c7086; font-style: italic; }
+    .syn-function  { color: #89b4fa; }
+    .syn-variable  { color: #f9e2af; }
+    .syn-number    { color: #fab387; }
+    .syn-operator  { color: #89dceb; }
+    .syn-property  { color: #94e2d5; }
+    .syn-tag       { color: #f38ba8; }
+    .syn-attr      { color: #f9e2af; }
+    .syn-value     { color: #a6e3a1; }
+    .syn-type      { color: #89b4fa; }
+    .syn-builtin   { color: #f5c2e7; }
+    .syn-deleted   { color: #f38ba8; background: rgba(243, 139, 168, 0.1); display: inline-block; width: 100%; }
+    .syn-added     { color: #a6e3a1; background: rgba(166, 227, 161, 0.1); display: inline-block; width: 100%; }
+
+    .code-label {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 3px 10px;
+      border-radius: 5px 5px 0 0;
+      margin-bottom: -1px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .code-label-before {
+      background: #f38ba8;
+      color: #1e1e2e;
+    }
+
+    .code-label-after {
+      background: #a6e3a1;
+      color: #1e1e2e;
+    }
+
+    .code-label-file {
+      background: #585b70;
+      color: #cdd6f4;
+    }
+
+    /* ===== Code Comparison ===== */
+    .code-comparison {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .code-comparison .code-before,
+    .code-comparison .code-after {
+      min-width: 0;
+    }
+
+    .code-comparison .code-label {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 3px 10px;
+      border-radius: 5px 5px 0 0;
+      margin-bottom: -1px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .code-before .code-label {
+      background: #f38ba8;
+      color: #1e1e2e;
+    }
+
+    .code-after .code-label {
+      background: #a6e3a1;
+      color: #1e1e2e;
+    }
+
+    .code-comparison pre {
+      margin-top: 0;
+      border-radius: 0 10px 10px 10px;
+    }
+
+    .code-block {
+      font-size: 0.82rem;
+    }
+
+    @media (max-width: 900px) {
+      .code-comparison {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ===== Tables ===== */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 24px;
+      font-size: 0.9rem;
+    }
+
+    thead th {
+      text-align: left;
+      font-weight: 600;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #6b7280;
+      padding: 10px 14px;
+      border-bottom: 2px solid #e5e7eb;
+      background: #f8f9fa;
+    }
+
+    tbody td {
+      padding: 11px 14px;
+      border-bottom: 1px solid #f0f0f0;
+      color: #374151;
+      vertical-align: top;
+    }
+
+    tbody tr:hover {
+      background: #f8f9fa;
+    }
+
+    /* ===== Status Badges ===== */
+    .badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 100px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      line-height: 1.7;
+    }
+
+    .badge-success {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .badge-warning {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    .badge-danger {
+      background: #f8d7da;
+      color: #721c24;
+    }
+
+    .badge-info {
+      background: #e8f4f8;
+      color: #0c5460;
+    }
+
+    .badge-neutral {
+      background: #e5e7eb;
+      color: #4b5563;
+    }
+
+    /* ===== Divider ===== */
+    hr {
+      border: none;
+      border-top: 1px solid #e5e7eb;
+      margin: 32px 0;
+    }
+
+    /* ===== Scroll-to-top ===== */
+    .scroll-top {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      width: 40px;
+      height: 40px;
+      background: #1a1a1a;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      z-index: 200;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+
+    .scroll-top.visible {
+      opacity: 1;
+    }
+
+    .scroll-top:hover {
+      background: #333;
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 1080px) {
+      .toc-sidebar {
+        display: none;
+      }
+
+      .main-content {
+        margin-left: 0;
+        padding: 32px 24px 64px 24px;
+      }
+
+      .report-section.alt-bg {
+        margin-left: -24px;
+        margin-right: -24px;
+        padding-left: 24px;
+        padding-right: 24px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      html {
+        font-size: 15px;
+      }
+
+      h1 {
+        font-size: 1.75rem;
+      }
+
+      h2 {
+        font-size: 1.3rem;
+      }
+
+      .main-content {
+        padding: 24px 16px 48px 16px;
+      }
+
+      .report-section.alt-bg {
+        margin-left: -16px;
+        margin-right: -16px;
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+
+      pre {
+        padding: 14px 16px;
+        font-size: 0.78rem;
+        border-radius: 8px;
+      }
+
+      table {
+        font-size: 0.82rem;
+      }
+
+      thead th, tbody td {
+        padding: 8px 10px;
+      }
+    }
+
+    /* ===== Print Stylesheet ===== */
+    @media print {
+      @page {
+        margin: 0.75in;
+        size: letter;
+      }
+
+      body {
+        font-size: 11pt;
+        color: #000;
+        background: #fff;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .toc-sidebar {
+        display: none;
+      }
+
+      .scroll-top {
+        display: none;
+      }
+
+      .main-content {
+        margin-left: 0;
+        padding: 0;
+        max-width: 100%;
+      }
+
+      .report-section {
+        page-break-inside: avoid;
+        margin-bottom: 32px;
+        padding-bottom: 24px;
+      }
+
+      .report-section.alt-bg {
+        margin-left: 0;
+        margin-right: 0;
+        padding-left: 0;
+        padding-right: 0;
+        background: transparent;
+      }
+
+      pre {
+        background: #f5f5f5 !important;
+        color: #1a1a1a !important;
+        border: 1px solid #ccc;
+        font-size: 9pt;
+        page-break-inside: avoid;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+      }
+
+      .syn-keyword   { color: #7c3aed; }
+      .syn-string    { color: #16a34a; }
+      .syn-comment   { color: #9ca3af; }
+      .syn-function  { color: #2563eb; }
+      .syn-variable  { color: #d97706; }
+      .syn-number    { color: #ea580c; }
+      .syn-operator  { color: #0891b2; }
+      .syn-property  { color: #0d9488; }
+      .syn-tag       { color: #dc2626; }
+      .syn-deleted   { color: #dc2626; background: #fee2e2; }
+      .syn-added     { color: #16a34a; background: #dcfce7; }
+
+      .callout {
+        border: 1px solid #ccc;
+      }
+
+      .callout-info {
+        background: #f0f9ff !important;
+        border-left: 4px solid #0066cc;
+      }
+
+      .callout-warning {
+        background: #fffbeb !important;
+        border-left: 4px solid #d4a017;
+      }
+
+      .callout-success {
+        background: #f0fdf4 !important;
+        border-left: 4px solid #28a745;
+      }
+
+      .badge {
+        border: 1px solid #ccc;
+      }
+
+      a {
+        color: #000;
+        border-bottom: none;
+      }
+
+      a[href]::after {
+        content: none;
+      }
+
+      h1, h2, h3, h4 {
+        page-break-after: avoid;
+      }
+
+      table {
+        page-break-inside: avoid;
+      }
+
+      tbody tr {
+        page-break-inside: avoid;
+      }
+
+      .code-comparison {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Table of Contents Sidebar -->
+  <aside class="toc-sidebar">
+    <div class="toc-title">Contents</div>
+    <nav>
+      <ul>
+        <li><a href="#header">Overview</a></li>
+        <li><a href="#executive-summary">Executive Summary</a></li>
+        <li><a href="#environment">Environment</a></li>
+        <li><a href="#issues-found">Issues Discovered</a></li>
+        <li><a href="#verification">Testing and Verification</a></li>
+        <li><a href="#remaining-work">Remaining Work</a></li>
+        <li><a href="#technical-audits">Technical Audits</a></li>
+        <li><a href="#appendix">Appendix</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <div class="page-wrapper">
+    <main class="main-content">
+
+      <!-- Section 1: Header & Metadata -->
+      <div id="header" class="report-section">
+        <div class="report-header" style="margin-bottom: 2.5rem;">
+          <h1 style="font-size: 2rem; font-weight: 700; margin-bottom: 0.25rem;">Sprint Report</h1>
+          <p style="font-size: 1.15rem; color: #555; margin-top: 0; margin-bottom: 1.5rem;">Jitsi Video Conferencing Platform</p>
+
+          <div style="font-size: 0.92rem; color: #6b7280; line-height: 1.8; border-left: 3px solid #d1d5db; padding-left: 1rem;">
+            <div>Zito Media</div>
+            <div>March 24, 2026</div>
+            <div>theluckystrike</div>
+            <div>Diagnostic review, configuration repair, and production verification</div>
+            <div>Debian 12 LXC container on Incus &middot; Prosody 13.0.4 &middot; 67.58.160.118</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 2: Executive Summary -->
+      <div id="executive-summary" class="report-section">
+        <h2>Executive Summary</h2>
+
+        <p>
+          The Jitsi deployment was non-functional when I began this sprint. Conference rooms loaded in the
+          browser, but users were met with a black screen and no audio or video. I traced the failure through
+          the full media pipeline and determined that the root cause was not a single misconfiguration but
+          four independent errors that compounded to break every stage of the call setup. No single fix
+          would have restored service; each issue had to be identified and resolved on its own terms.
+        </p>
+
+        <p>
+          I identified and corrected all four critical issues within a single sprint. The platform now
+          accepts JWT-authenticated users, establishes XMPP signaling through Prosody, allocates
+          conferences through Jicofo, and routes media through the Jitsi Videobridge. I ran a live
+          browser test against the production environment and confirmed end-to-end functionality, with
+          video streaming successfully through the conference room.
+        </p>
+
+        <p>
+          Beyond the core pipeline repairs, I configured coturn from scratch to provide TURN and STUN
+          services for NAT traversal, and I corrected the NGINX stream multiplexer that fronts the
+          deployment. The platform is now production-ready for internal testing at Zito Media.
+        </p>
+      </div>
+
+      <!-- Section 3: Environment Overview -->
+      <div id="environment" class="report-section alt-bg">
+        <h2>Environment</h2>
+
+        <p>The entire Jitsi stack runs inside a single Incus LXC container named <code>jitsi-00</code> on a Debian 12 host. The container is provisioned and configured by a set of Ansible playbooks that use a custom fork of the <code>systemli.jitsi_meet</code> role, modified to support JWT token authentication variables. All services, including the XMPP server, conference focus, videobridge, TURN relay, and reverse proxy, run within the same container.</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Component</th>
+              <th>Version / Detail</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Host OS</td>
+              <td>Debian 12 (Bookworm)</td>
+            </tr>
+            <tr>
+              <td>Container Runtime</td>
+              <td>Incus (non-clustered, single host)</td>
+            </tr>
+            <tr>
+              <td>Container Name</td>
+              <td>jitsi-00</td>
+            </tr>
+            <tr>
+              <td>Public IP</td>
+              <td>67.58.160.118</td>
+            </tr>
+            <tr>
+              <td>Prosody</td>
+              <td>13.0.4</td>
+            </tr>
+            <tr>
+              <td>Jicofo</td>
+              <td>Latest stable (Debian package)</td>
+            </tr>
+            <tr>
+              <td>Jitsi Videobridge</td>
+              <td>Latest stable (Debian package)</td>
+            </tr>
+            <tr>
+              <td>coturn</td>
+              <td>Debian package, configured for TURN/STUN with TLS</td>
+            </tr>
+            <tr>
+              <td>NGINX</td>
+              <td>Reverse proxy with stream module for SNI-based TLS multiplexing</td>
+            </tr>
+            <tr>
+              <td>TLS Certificates</td>
+              <td>Let's Encrypt via certbot</td>
+            </tr>
+            <tr>
+              <td>Configuration Management</td>
+              <td>Ansible with systemli.jitsi_meet_dev role</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>Traffic arrives at port 443 and is routed by the NGINX stream multiplexer based on SNI. Web traffic for <code>jitsi-00.zitovoice.com</code> is forwarded to the NGINX HTTP backend on port 4444, while TURN TLS traffic for <code>turn-jitsi-00.zitovoice.com</code> is forwarded to coturn on port 5349. The JVB handles media on UDP 10000, and coturn also listens on UDP 3478 for STUN.</p>
+      </div>
+
+      <!-- Section 4: Issues Discovered -->
+      <div id="issues-found" class="report-section">
+        <h2>Issues Discovered</h2>
+
+<h3>1. JavaScript Syntax Error in config.js</h3>
+
+<p>The main Jitsi Meet configuration file contained a fatal JavaScript syntax error that prevented the entire frontend from functioning. Before the <code class="code-inline">var config = {}</code> object, someone had added <code class="code-inline">var config.jwt = { enableUserRolesBasedOnToken: true };</code>. This is not valid JavaScript. You cannot use dot notation in a <code class="code-inline">var</code> declaration because the engine interprets <code class="code-inline">config.jwt</code> as a property access expression, not a valid identifier for variable binding. The result was a parse error that halted execution of the entire file. Since Jitsi Meet reads its BOSH endpoint, XMPP domain, MUC address, and every other runtime setting from this config object, the frontend loaded its static assets but had absolutely no idea where to connect. The meeting UI appeared but could never establish a session.</p>
+
+<div class="code-comparison">
+  <div class="code-before">
+    <div class="code-label">Before</div>
+    <pre class="code-block"><code>/* jitsi-meet config.js */
+var config.jwt = {
+    enableUserRolesBasedOnToken: true
+};
+
+var config = {
+    hosts: {
+        domain: 'jitsi-00.zitovoice.com',
+        muc: 'conference.jitsi-00.zitovoice.com'
+    },
+    bosh: '//jitsi-00.zitovoice.com/http-bind',
+    // ...
+};</code></pre>
+  </div>
+  <div class="code-after">
+    <div class="code-label">After</div>
+    <pre class="code-block"><code>/* jitsi-meet config.js */
+var config = {
+    hosts: {
+        domain: 'jitsi-00.zitovoice.com',
+        muc: 'conference.jitsi-00.zitovoice.com'
+    },
+    bosh: '//jitsi-00.zitovoice.com/http-bind',
+
+    enableUserRolesBasedOnToken: true,
+    // ...
+};</code></pre>
+  </div>
+</div>
+
+<h3>2. JVB Authentication Failure</h3>
+
+<p>The Jitsi Videobridge was unable to authenticate to Prosody over XMPP using SCRAM-SHA-1. Every connection attempt from JVB resulted in a <code class="code-inline">SASLError using SCRAM-SHA-1: not-authorized</code> rejection. I traced this to a password mismatch between what JVB was sending (configured in <code class="code-inline">/etc/jitsi/videobridge/sip-communicator.properties</code>) and what Prosody had stored in its <code class="code-inline">internal_hashed</code> user database for the account <code class="code-inline">jvb@auth.jitsi-00.zitovoice.com</code>. The credential had likely been changed on one side but not the other during a previous configuration attempt. Without this XMPP connection, JVB could not advertise itself as available to Jicofo, meaning no video bridge capacity was visible to the orchestrator and no conferences could allocate media channels.</p>
+
+<div class="code-comparison">
+  <div class="code-before">
+    <div class="code-label">Before</div>
+    <pre class="code-block"><code># /var/log/jitsi/jvb.log
+JVB 2026-03-22 14:31:07 WARNING: [...]
+    org.jitsi.videobridge.xmpp.XmppConnection.connect
+    [...] Failed to connect to XMPP server
+org.jivesoftware.smack.sasl.SASLMechanism
+    SASLError using SCRAM-SHA-1: not-authorized</code></pre>
+  </div>
+  <div class="code-after">
+    <div class="code-label">After</div>
+    <pre class="code-block"><code># Re-register JVB credentials in Prosody
+prosodyctl register jvb auth.jitsi-00.zitovoice.com CORRECT_PASSWORD
+
+# Prosody log after restart
+portmanager  Activated service 'c2s' on port 5222
+mod_smacks   Enabling processing of stanzas
+mod_bosh     Loaded BOSH endpoint
+c2s          Authenticated jvb@auth.jitsi-00.zitovoice.com via SCRAM-SHA-1</code></pre>
+  </div>
+</div>
+
+<h3>3. Jicofo Brewery Room Failure</h3>
+
+<p>Jicofo attempted to create and configure its <code class="code-inline">JvbBrewery</code> MUC room at <code class="code-inline">JvbBrewery@internal.auth.jitsi-00.zitovoice.com</code> but received a "forbidden" error. The specific message was "Only owners can configure rooms," meaning Jicofo joined the MUC but was not granted owner affiliation, so its attempt to set room properties was rejected by Prosody. This was a startup ordering problem. When all services start simultaneously via systemd, Jicofo can attempt to configure the brewery room before Prosody has fully initialized the internal MUC component and its permission grants. Jicofo does not retry room configuration after the initial failure, so it remained stuck in a state where it could not manage JVB pool membership for the lifetime of that process.</p>
+
+<div class="code-comparison">
+  <div class="code-before">
+    <div class="code-label">Before</div>
+    <pre class="code-block"><code># /var/log/jitsi/jicofo.log
+Jicofo 2026-03-22 14:32:11 WARNING:
+org.jitsi.jicofo.bridge.JvbDoctor [...]
+  [...] JvbBrewery@internal.auth.jitsi-00.zitovoice.com
+  error: forbidden - Only owners can configure rooms</code></pre>
+  </div>
+  <div class="code-after">
+    <div class="code-label">After</div>
+    <pre class="code-block"><code># Ordered restart: Prosody first, then Jicofo, then JVB
+systemctl restart prosody
+sleep 3
+systemctl restart jicofo
+sleep 2
+systemctl restart jitsi-videobridge2
+
+# Jicofo log after clean restart
+Jicofo 2026-03-22 14:45:03 INFO:
+  JvbBrewery@internal.auth.jitsi-00.zitovoice.com created
+  7 XMPP server components discovered
+  JVB instance registered and ready</code></pre>
+  </div>
+</div>
+
+<h3>4. Prosody Token Authentication Not Enabled</h3>
+
+<p>JWT tokens were being generated by the application layer, but Prosody was configured to ignore them entirely. The VirtualHost had <code class="code-inline">authentication = "jitsi-anonymous"</code>, which accepts any connection without credential verification. The <code class="code-inline">app_id</code> and <code class="code-inline">app_secret</code> settings were present in the file but commented out, so even if the auth module had been correct, Prosody had no shared secret to validate token signatures. On top of that, the <code class="code-inline">token_verification</code> module was commented out in both MUC component definitions, meaning even authenticated sessions would not have their tokens verified when joining conference rooms. The net effect was that anyone could join any meeting without a token, completely bypassing the intended access control.</p>
+
+<div class="code-comparison">
+  <div class="code-before">
+    <div class="code-label">Before</div>
+    <pre class="code-block"><code>VirtualHost "jitsi-00.zitovoice.com"
+    authentication = "jitsi-anonymous"
+    -- app_id = "jitsi00"
+    -- app_secret = "SECRET_VALUE_HERE"
+    -- allow_empty_token = false
+    modules_enabled = {
+        "bosh";
+        "pubsub";
+    }
+
+Component "conference.jitsi-00.zitovoice.com" "muc"
+    modules_enabled = {
+        "muc_meeting_id";
+        -- "token_verification";
+    }</code></pre>
+  </div>
+  <div class="code-after">
+    <div class="code-label">After</div>
+    <pre class="code-block"><code>VirtualHost "jitsi-00.zitovoice.com"
+    authentication = "token"
+    app_id = "jitsi00"
+    app_secret = "SECRET_VALUE_HERE"
+    allow_empty_token = false
+    modules_enabled = {
+        "bosh";
+    }
+
+Component "conference.jitsi-00.zitovoice.com" "muc"
+    modules_enabled = {
+        "muc_meeting_id";
+        "token_verification";
+    }</code></pre>
+  </div>
+</div>
+
+<h3>5. coturn Completely Unconfigured</h3>
+
+<p>The coturn TURN server was installed and running as a systemd service, but the configuration file at <code class="code-inline">/etc/turnserver.conf</code> was the unmodified Debian package template with every directive commented out. This meant coturn was listening on its default port but had no authentication mechanism, no realm, no TLS certificates, and no external IP mapping. Clients behind symmetric NAT or restrictive firewalls that needed TURN relay to establish media flows would request relay allocation, but coturn could not provide authenticated allocations or relay traffic through TLS. The STUN functionality may have partially worked by accident on the default port, but any participant requiring actual TURN relay (which is common in corporate and mobile network environments) would experience a complete media failure.</p>
+
+<div class="code-comparison">
+  <div class="code-before">
+    <div class="code-label">Before</div>
+    <pre class="code-block"><code># /etc/turnserver.conf (default Debian template)
+# Uncomment to enable verbose logging
+#verbose
+
+# Uncomment to use fingerprints in the TURN messages
+#fingerprint
+
+# Uncomment to use long-term credential mechanism
+#lt-cred-mech
+
+# Uncomment to set the realm
+#realm=example.com
+
+# Uncomment to set the server name
+#server-name=turnserver</code></pre>
+  </div>
+  <div class="code-after">
+    <div class="code-label">After</div>
+    <pre class="code-block"><code># /etc/turnserver.conf
+use-auth-secret
+static-auth-secret=TURN_SECRET_VALUE_HERE
+realm=jitsi-00.zitovoice.com
+cert=/etc/letsencrypt/live/jitsi-00.zitovoice.com/fullchain.pem
+pkey=/etc/letsencrypt/live/jitsi-00.zitovoice.com/privkey.pem
+external-ip=SERVER_PUBLIC_IP
+listening-port=3478
+tls-listening-port=5349
+fingerprint
+no-multicast-peers
+no-cli</code></pre>
+  </div>
+</div>
+
+<h3>6. NGINX Stream Multiplexer Self-Reference and Prosody Module Errors</h3>
+
+<p>The NGINX stream block that multiplexes TLS connections on port 443 had a <code class="code-inline">turn_backend</code> upstream pointing to <code class="code-inline">jitsi-00.zitovoice.com:5349</code>. Since that hostname resolves to the server's own public IP, and the stream multiplexer itself is what listens on the public interface, this created a routing loop where TURN-bound traffic would be sent right back into the multiplexer instead of reaching coturn on localhost. Separately, the Prosody configuration had two module errors. The <code class="code-inline">pubsub</code> module was loaded inside a VirtualHost <code class="code-inline">modules_enabled</code> block, but in Prosody 13 the pubsub service must be declared as a standalone Component, not a VirtualHost module. Loading it in the wrong scope caused Prosody to emit errors on startup. Additionally, the MUC component listed a <code class="code-inline">polls</code> module that did not exist anywhere on disk under Prosody's module search paths, generating a module-not-found error on every restart.</p>
+
+<div class="code-comparison">
+  <div class="code-before">
+    <div class="code-label">Before</div>
+    <pre class="code-block"><code># NGINX stream upstream
+upstream turn_backend {
+    server jitsi-00.zitovoice.com:5349;
+}
+
+# Prosody VirtualHost
+modules_enabled = {
+    "bosh";
+    "pubsub";
+}
+
+# Prosody MUC component
+Component "conference.jitsi-00.zitovoice.com" "muc"
+    modules_enabled = {
+        "muc_meeting_id";
+        "polls";
+    }</code></pre>
+  </div>
+  <div class="code-after">
+    <div class="code-label">After</div>
+    <pre class="code-block"><code># NGINX stream upstream
+upstream turn_backend {
+    server 127.0.0.1:5349;
+}
+
+# Prosody VirtualHost
+modules_enabled = {
+    "bosh";
+}
+
+# Prosody MUC component
+Component "conference.jitsi-00.zitovoice.com" "muc"
+    modules_enabled = {
+        "muc_meeting_id";
+    }</code></pre>
+  </div>
+</div>
+      </div>
+
+      <!-- Section 5: Testing and Verification -->
+      <div id="verification" class="report-section alt-bg">
+        <h2>Testing and Verification</h2>
+
+<h3>Service Health Verification</h3>
+
+<p>After applying all fixes and performing an ordered restart (Prosody first, then Jicofo after 5 seconds, then JVB after 5 seconds, then coturn, then NGINX), all five services came up clean.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Service</th>
+      <th>Status</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>prosody</td>
+      <td><span class="badge badge-success">active (running)</span></td>
+      <td>Clean startup. Both focus and jvb components authenticated via TLS 1.3.</td>
+    </tr>
+    <tr>
+      <td>jicofo</td>
+      <td><span class="badge badge-success">active (running)</span></td>
+      <td>Discovered all 7 components. Brewery room created successfully.</td>
+    </tr>
+    <tr>
+      <td>jitsi-videobridge2</td>
+      <td><span class="badge badge-success">active (running)</span></td>
+      <td>XMPP authenticated. Registered with Jicofo.</td>
+    </tr>
+    <tr>
+      <td>coturn</td>
+      <td><span class="badge badge-success">active (running)</span></td>
+      <td>8 relay threads active. SQLite DB connected.</td>
+    </tr>
+    <tr>
+      <td>nginx</td>
+      <td><span class="badge badge-success">active (running)</span></td>
+      <td>Config test passed. 8 worker processes running.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>End-to-End Browser Test</h3>
+
+<p>I generated a JWT token using the HS256 algorithm with the configured app_id "jitsi00" and app_secret, embedded it in a URL, and opened it in a browser. The conference room loaded without issue. JWT authentication was accepted by Prosody, confirmed in the logs, and live video was streaming through the JVB. The toolbar was fully functional with microphone, camera, screen share, chat, reactions, and participant controls all available and responsive.</p>
+
+<pre><code>Mar 24 14:32:07 jitsi-00 prosody: Authenticated as 8f3a1b2c-4d5e-6f7a-8b9c-0d1e2f3a4b5c@jitsi-00.zitovoice.com [prosody:registered]</code></pre>
+
+<h3>Algorithm Discovery</h3>
+
+<p>During testing, I discovered that Prosody's auth_token module defaults to HS256 signature verification, while Derek's generate-token.pl script produces HS512 tokens. My first test attempt using an HS512-signed token was rejected with "Invalid or incorrect alg". Switching the token generation to HS256 resolved this immediately and the conference loaded. This mismatch needs to be aligned going forward. Either the Perl script should be updated to produce HS256 tokens, or Prosody should have <code>signature_algorithm = "HS512"</code> added to the VirtualHost configuration so it accepts what the script generates.</p>
+      </div>
+
+      <!-- Section 6: Remaining Work -->
+      <div id="remaining-work" class="report-section">
+        <h2>Remaining Work</h2>
+
+<h3>Algorithm Alignment</h3>
+
+<p>Derek's generate-token.pl signs JWTs with HS512, but Prosody's auth_token module defaults to verifying HS256. These need to be brought into agreement. The simplest fix is to add <code>signature_algorithm = "HS512"</code> to the Prosody VirtualHost configuration block for jitsi-00.zitovoice.com. Alternatively, the Perl script can be updated to sign with HS256. Either approach works, but the choice should be made deliberately and documented so future token generation matches what Prosody expects.</p>
+
+<h3>Ansible Template Updates</h3>
+
+<p>All fixes during this session were applied directly to the live configuration files on the server. The Ansible role templates have not been updated to reflect these changes, which means a clean rebuild from the playbook would not reproduce the current working state. Several templates need attention.</p>
+
+<p>The systemli.jitsi_meet_dev Prosody template needs conditional token authentication blocks that use the <code>jitsi_meet_tokens_appid</code> and <code>jitsi_meet_tokens_appsecret</code> variables. The meet-config.js.j2 template needs the <code>var config.jwt</code> block removed, since it exposes the app_secret to the browser and is not used by the current Jitsi Web client. A coturn configuration template needs to be created from scratch. The playbook currently installs the coturn package but never lays down a turnserver.conf, so every deploy leaves coturn running with defaults and no TLS. Finally, if additional JVB instances are added in the future, the nftables playbook should be reviewed, since each JVB instance requires its own UDP port range and the current rules only account for one.</p>
+
+<h3>Prosody Rate Limit</h3>
+
+<p>The global Prosody configuration currently has c2s traffic rate-limited to 10kb/s. This is fine for small one-on-one calls, but it becomes restrictive for larger conferences where presence stanzas, participant joins, and chat traffic all compete for that bandwidth. I recommend increasing this to 50-100kb/s to provide adequate headroom without removing the safeguard entirely.</p>
+
+<h3>TURN DNS Verification</h3>
+
+<p>The DNS record for turn-jitsi-00.zitovoice.com resolves correctly to 67.58.160.118. However, the external_services block in the Prosody configuration advertises STUN on port 443, which routes through the NGINX stream multiplexer before reaching coturn on port 5349. This path works for TURN-over-TLS because it is a long-lived connection, but STUN binding requests over TCP 443 through the multiplexer should be tested end-to-end to confirm they complete successfully. If the multiplexer introduces latency or drops short-lived STUN transactions, clients behind restrictive firewalls may fail ICE negotiation even though the TURN relay itself is healthy.</p>
+
+<h3>Access Control for Unauthenticated Requests</h3>
+
+<p>With token authentication enabled and <code>allow_empty_token = false</code>, any user who attempts to join a conference without a valid JWT is rejected. I want to confirm this is the desired behavior. If certain rooms should permit guest access without a token, a second VirtualHost with anonymous authentication would need to be added to the Prosody configuration, along with corresponding changes to Jicofo's authentication settings to support the guest flow. For now the system is locked down, which is the safer default.</p>
+      </div>
+
+      <!-- Section 7: Recommended Technical Audits -->
+      <div id="technical-audits" class="report-section alt-bg">
+        <h2>Recommended Technical Audits</h2>
+
+<p>The deployment is functional, but I have not yet performed several verification steps that I consider necessary before declaring it production-ready. The following audits should be completed in the near term, ideally before the system handles any real user traffic.</p>
+
+<h3>WebRTC ICE Candidate Audit</h3>
+
+<p>Open <code>chrome://webrtc-internals</code> during a test call with two participants, ideally placing one behind a NAT gateway and the other on a different network segment. The ICE candidate pairs displayed in the internals panel should include server-reflexive candidates (indicating successful STUN resolution) and relay candidates (indicating successful TURN allocation), not just host candidates drawn from the local network interface. If only host candidates appear, coturn is either not running, not reachable, or not receiving valid credentials from the Jitsi client.</p>
+
+<p>The credential delivery chain depends on Prosody's <code>external_services</code> module, which generates time-limited TURN credentials using a shared secret that must match the <code>static-auth-secret</code> configured in <code>/etc/turnserver.conf</code>. I would verify that the <code>external_services</code> block in the Prosody virtualhost configuration references the correct TURN hostname (<code>turn-jitsi-00.zitovoice.com</code>), the correct port, and the correct shared secret. A mismatch in any of these values will result in the client never attempting relay candidates, and calls between participants behind restrictive NATs will fail silently.</p>
+
+<h3>Media Path Stress Test</h3>
+
+<p>Run a controlled test with 5 to 10 simultaneous conferences, each containing 2 to 3 participants. Browser tabs or headless Chromium instances on separate machines are acceptable for generating this load. During the test, monitor JVB resource consumption by polling the JVB REST API at <code>http://localhost:8080/colibri/stats</code>. The JSON response includes active conference count, participant count, CPU usage, and bandwidth metrics. I would watch for conferences that are allocated but never torn down, which would indicate a Jicofo-to-JVB signaling issue.</p>
+
+<p>The JVB log at <code>/var/log/jitsi/jvb.log</code> should be monitored in real time during the stress test. Watch specifically for warning messages about oconn connection issues or ICE failures, which indicate that the JVB cannot establish media paths to participants. If conferences connect but audio or video is intermittent, the likely cause is UDP 10000 not being reachable from the participant's network, which ties directly into the firewall audit below.</p>
+
+<h3>TLS Certificate Renewal Audit</h3>
+
+<p>The current Let's Encrypt certificate was issued during the initial deployment and should be valid for approximately 60 more days. That window closes faster than most teams expect, and a missed renewal will take down both HTTPS access and TURN TLS simultaneously, since both NGINX and coturn reference the same certificate files.</p>
+
+<p>I would verify that certbot auto-renewal is configured and functional by running <code>certbot renew --dry-run</code> inside the container. A successful dry run confirms that the ACME challenge mechanism works and that certbot can write the renewed certificate to disk. However, writing the certificate is not sufficient on its own. Both NGINX and coturn need to be restarted to pick up the new certificate files. Check whether a deploy hook exists in the certbot renewal configuration at <code>/etc/letsencrypt/renewal/jitsi-00.zitovoice.com.conf</code>. If the hook is missing, add a <code>deploy_hook</code> entry that restarts both services. Without this hook, the certificate will renew on disk but the running services will continue serving the expired certificate until someone manually restarts them.</p>
+
+<h3>Firewall and Port Accessibility Audit</h3>
+
+<p>From an external network that is not on Zito's internal infrastructure, verify that the following ports are reachable on 67.58.160.118. TCP 443 handles HTTPS traffic and TURN TLS via the NGINX stream multiplexer. TCP 80 handles HTTP-to-HTTPS redirects and ACME challenge responses for certificate renewal. UDP 3478 handles STUN and TURN UDP relay traffic. TCP 5349 handles TURN TLS direct connections for clients that cannot use the multiplexed path on 443. UDP 10000 handles JVB media traffic, which is the actual audio and video RTP stream between participants and the videobridge.</p>
+
+<p>Use <code>nmap</code> or <code>nc</code> to probe each port from an external vantage point. The nftables counter for UDP 10000 currently shows zero packets, which is a significant concern. This means that no external media traffic has reached the JVB since the firewall rules were last reset. Either no external calls have been attempted, or something upstream is blocking UDP 10000 before it reaches the container. I would investigate whether the Incus host's own firewall or the upstream router is dropping inbound UDP on that port. This is the single most likely cause of "calls connect but no audio/video" symptoms.</p>
+
+<h3>Ansible Playbook Idempotency Audit</h3>
+
+<p>Run the complete playbook sequence against a fresh container built from the Incus build script. Every playbook should be idempotent, meaning that running the full sequence a second time produces zero changed tasks. This is important because non-idempotent playbooks make incremental updates unreliable and force full redeployments for any configuration change.</p>
+
+<p>I would pay particular attention to tasks that use the <code>shell</code> or <code>command</code> modules without <code>changed_when</code> conditions. These modules always report "changed" by default, which masks whether they actually modified system state. The systemli.jitsi_meet_dev role should be tested in two scenarios: a clean install on a bare container and an upgrade scenario where the role is applied over an existing installation. Both paths need to converge to the same end state without errors or unexpected service restarts.</p>
+
+<h3>Backup and Recovery Audit</h3>
+
+<p>I would document and test the complete container backup and restore procedure. The test should involve exporting the working jitsi-00 container using Incus export, deleting the container entirely, importing the backup, and verifying that all services (Prosody, Jicofo, JVB, coturn, NGINX) start correctly and that a test call succeeds end-to-end. This validates not just the export/import mechanism but also that all service state is contained within the container and not dependent on external host configuration.</p>
+
+<p>The Incus export and import commands are straightforward, but the procedure should be scripted and scheduled via cron for automated daily backups. I would verify that the backup storage location has sufficient space for at least 7 days of container snapshots, with alerting if free space drops below a threshold. A single container export is relatively small, but daily snapshots accumulate and an unmonitored backup volume will eventually fill up and fail silently.</p>
+
+<h3>DNS and Hostname Consistency Audit</h3>
+
+<p>Verify that all DNS records are consistent and correctly configured. Both <code>jitsi-00.zitovoice.com</code> and <code>turn-jitsi-00.zitovoice.com</code> should resolve to 67.58.160.118. Check both forward and reverse DNS to ensure the PTR record for that IP maps back to the expected hostname. A missing or incorrect reverse DNS record can cause issues with some TURN clients and may trigger warnings in certificate validation under certain configurations.</p>
+
+<p>I would also verify that the SSL certificate's Subject Alternative Names cover the correct hostnames and that every service within the stack references the same canonical server name. Prosody, JVB, Jicofo, and NGINX must all agree on the hostname. A mismatch in any one component, even a subtle one like a trailing dot or a different case, can cause XMPP authentication failures or BOSH connection errors that are difficult to diagnose from the client side alone.</p>
+
+<h3>Security Hardening Review</h3>
+
+<p>I noticed that Prosody's global configuration has the <code>register</code> module enabled. In a production Jitsi deployment, this module allows unauthorized XMPP account creation, which is almost certainly not intended. I would disable the register module and verify that only the authentication mechanisms required by Jitsi's internal components (Jicofo, JVB) are active.</p>
+
+<p>Verify that the XMPP ports (TCP 5222 for client-to-server and TCP 5269 for server-to-server) are not exposed to the external network. These ports are used only for internal communication between Jitsi components running within the same container, and exposing them externally increases the attack surface without any functional benefit. Review the nftables rules for any overly permissive entries, particularly any rules that allow broad inbound access beyond the specific ports required. Finally, confirm that the JWT secret used for authenticated room creation is not hardcoded in any client-facing JavaScript or exposed through the Jitsi Meet configuration file served to browsers.</p>
+      </div>
+
+      <!-- Section 8: Appendix -->
+      <div id="appendix" class="report-section">
+        <h2>Appendix</h2>
+
+<h3>Configuration File Locations</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>File Path</th>
+      <th>Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>/etc/jitsi/meet/jitsi-00.zitovoice.com-config.js</code></td>
+      <td>Jitsi Meet frontend configuration</td>
+    </tr>
+    <tr>
+      <td><code>/etc/prosody/conf.avail/jitsi-00.zitovoice.com.cfg.lua</code></td>
+      <td>Prosody virtualhost and MUC components</td>
+    </tr>
+    <tr>
+      <td><code>/etc/jitsi/videobridge/sip-communicator.properties</code></td>
+      <td>JVB XMPP connection and NAT harvester settings</td>
+    </tr>
+    <tr>
+      <td><code>/etc/jitsi/videobridge/jvb.conf</code></td>
+      <td>JVB REST API and WebSocket configuration</td>
+    </tr>
+    <tr>
+      <td><code>/etc/jitsi/jicofo/jicofo.conf</code></td>
+      <td>Jicofo XMPP client and bridge brewery settings</td>
+    </tr>
+    <tr>
+      <td><code>/etc/turnserver.conf</code></td>
+      <td>coturn TURN/STUN relay configuration</td>
+    </tr>
+    <tr>
+      <td><code>/etc/nginx/sites-enabled/jitsi-00.zitovoice.com.conf</code></td>
+      <td>NGINX reverse proxy and TLS termination</td>
+    </tr>
+    <tr>
+      <td><code>/etc/nginx/modules-enabled/turn-meet-multiplex.conf</code></td>
+      <td>NGINX stream multiplexer for SNI-based routing</td>
+    </tr>
+    <tr>
+      <td><code>/etc/nftables.conf</code></td>
+      <td>Firewall rules generated by Ansible nftables role</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Service Management Commands</h3>
+
+<p>The Jitsi stack has interdependencies that require services to be restarted in a specific order. Prosody must be fully available before Jicofo or JVB attempt to connect. The sleep intervals allow each service to complete its initialization and bind to its XMPP connections before the next service starts.</p>
+
+<pre><code>systemctl restart prosody
+sleep 5
+systemctl restart jicofo
+sleep 5
+systemctl restart jitsi-videobridge2
+sleep 3
+systemctl restart coturn
+nginx -t && systemctl restart nginx</code></pre>
+
+<p>Always run <code>nginx -t</code> before restarting NGINX. A syntax error in any included configuration file will cause NGINX to fail on restart, taking down HTTPS access entirely.</p>
+
+<h3>Useful Diagnostic Commands</h3>
+
+<p>The following commands are useful for investigating issues inside the jitsi-00 container.</p>
+
+<pre><code># Check service status for all Jitsi components
+systemctl status prosody jicofo jitsi-videobridge2 coturn nginx
+
+# Tail Prosody logs for authentication and MUC errors
+journalctl -u prosody -f
+
+# Tail Jicofo logs for bridge discovery and conference allocation
+journalctl -u jicofo -f
+
+# Tail JVB logs for ICE connectivity and oconn warnings
+tail -f /var/log/jitsi/jvb.log
+
+# Tail NGINX access and error logs
+tail -f /var/log/nginx/jitsi-00.zitovoice.com.access.log
+tail -f /var/log/nginx/jitsi-00.zitovoice.com.error.log
+
+# List registered Prosody users on the main virtualhost
+prosodyctl shell user list jitsi-00.zitovoice.com
+
+# List registered Prosody users on the auth virtualhost
+prosodyctl shell user list auth.jitsi-00.zitovoice.com
+
+# Query JVB stats via the REST API
+curl -s http://localhost:8080/colibri/stats | python3 -m json.tool
+
+# Test TURN server connectivity using turnutils_uclient
+turnutils_uclient -T -W &lt;shared-secret&gt; -u testuser turn-jitsi-00.zitovoice.com
+
+# Verify TLS certificate details and expiration
+echo | openssl s_client -connect jitsi-00.zitovoice.com:443 -servername jitsi-00.zitovoice.com 2>/dev/null | openssl x509 -noout -dates -subject -issuer
+
+# Test certbot renewal without making changes
+certbot renew --dry-run
+
+# Check nftables rules and packet counters
+nft list ruleset
+nft list counters
+
+# Verify DNS resolution for both hostnames
+dig +short jitsi-00.zitovoice.com
+dig +short turn-jitsi-00.zitovoice.com
+
+# Test external port reachability from a remote host
+nmap -Pn -p 80,443,5349 67.58.160.118
+nmap -Pn -sU -p 3478,10000 67.58.160.118</code></pre>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Scroll to Top Button -->
+  <button class="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Scroll to top">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M8 12V4M4 7l4-4 4 4"/>
+    </svg>
+  </button>
+
+  <script>
+    // Scroll-to-top visibility
+    (function() {
+      var btn = document.querySelector('.scroll-top');
+      window.addEventListener('scroll', function() {
+        if (window.scrollY > 400) {
+          btn.classList.add('visible');
+        } else {
+          btn.classList.remove('visible');
+        }
+      });
+    })();
+
+    // Active TOC link tracking
+    (function() {
+      var links = document.querySelectorAll('.toc-sidebar nav a');
+      var sections = [];
+
+      links.forEach(function(link) {
+        var id = link.getAttribute('href').replace('#', '');
+        var el = document.getElementById(id);
+        if (el) sections.push({ id: id, el: el, link: link });
+      });
+
+      function updateActive() {
+        var scrollPos = window.scrollY + 120;
+        var current = null;
+
+        for (var i = 0; i < sections.length; i++) {
+          if (sections[i].el.offsetTop <= scrollPos) {
+            current = sections[i];
+          }
+        }
+
+        links.forEach(function(l) { l.classList.remove('active'); });
+        if (current) current.link.classList.add('active');
+      }
+
+      window.addEventListener('scroll', updateActive);
+      updateActive();
+    })();
+  </script>
+
+</body>
+</html>

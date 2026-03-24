@@ -1,0 +1,100 @@
+Mar 23 19:21:54 lobby.jitsi-00.zitovoice.com:tls	info	Certificates loaded
+Mar 23 19:21:54 modulemanager	error	Unable to load module 'polls': /usr/lib/prosody/modules/share/lua/5.2/mod_polls/mod_polls.lua: No such file or directory
+Mar 23 19:21:54 jitsi-00.zitovoice.com:muc_lobby_rooms	info	Lobby component loaded lobby.jitsi-00.zitovoice.com
+Mar 23 19:21:54 speakerstats.jitsi-00.zitovoice.com:speakerstats_component	info	Starting speakerstats for conference.jitsi-00.zitovoice.com
+Mar 23 19:21:54 speakerstats.jitsi-00.zitovoice.com:speakerstats_component	info	No host/component found, will wait for it: conference.jitsi-00.zitovoice.com
+Mar 23 19:21:54 speakerstats.jitsi-00.zitovoice.com:speakerstats_component	info	No host/component found, will wait for it: breakout.jitsi-00.zitovoice.com
+Mar 23 19:21:54 jitsi-00.zitovoice.com:features_identity	info	Adding identity speakerstats for host speakerstats.jitsi-00.zitovoice.com
+Mar 23 19:21:54 speakerstats.jitsi-00.zitovoice.com:tls	info	Certificates loaded
+Mar 23 19:21:54 focus.jitsi-00.zitovoice.com:tls	info	Certificates loaded
+Mar 23 19:21:54 internal.auth.jitsi-00.zitovoice.com:tls	info	Certificates loaded
+Mar 23 19:21:54 conferenceduration.jitsi-00.zitovoice.com:conference_duration_component	info	Starting conference duration timer for conference.jitsi-00.zitovoice.com
+Mar 23 19:21:54 conferenceduration.jitsi-00.zitovoice.com:conference_duration_component	info	No host/component found, will wait for it: conference.jitsi-00.zitovoice.com
+Mar 23 19:21:54 conferenceduration.jitsi-00.zitovoice.com:tls	info	Certificates loaded
+Mar 23 19:21:54 auth.jitsi-00.zitovoice.com:tls	info	Certificates loaded
+Mar 23 19:21:54 conference.jitsi-00.zitovoice.com:muc_domain_mapper	info	Loading mod_muc_domain_mapper for host avmoderation.jitsi-00.zitovoice.com!
+Mar 23 19:21:54 conference.jitsi-00.zitovoice.com:muc_domain_mapper	info	Loading mod_muc_domain_mapper for host endconference.jitsi-00.zitovoice.com!
+Mar 23 19:21:54 conference.jitsi-00.zitovoice.com:muc_domain_mapper	info	Loading mod_muc_domain_mapper for host jitsi-00.zitovoice.com!
+Mar 23 19:21:54 conference.jitsi-00.zitovoice.com:muc_domain_mapper	info	Loading mod_muc_domain_mapper for host localhost!
+Mar 23 19:21:54 conference.jitsi-00.zitovoice.com:muc_domain_mapper	info	Loading mod_muc_domain_mapper for host lobby.jitsi-00.zitovoice.com!
+Mar 23 19:21:54 conference.jitsi-00.zitovoice.com:muc_domain_mapper	info	Loading mod_muc_domain_mapper for host speakerstats.jitsi-00.zitovoice.com!
+Mar 23 19:21:54 conference.jitsi-00.zitovoice.com:muc_domain_mapper	info	Loading mod_muc_domain_mapper for host focus.jitsi-00.zitovoice.com!
+Mar 23 19:21:54 conference.jitsi-00.zitovoice.com:muc_domain_mapper	info	Loading mod_muc_domain_mapper for host internal.auth.jitsi-00.zitovoice.com!
+Mar 23 19:21:54 conference.jitsi-00.zitovoice.com:muc_domain_mapper	info	Loading mod_muc_domain_mapper for host conferenceduration.jitsi-00.zitovoice.com!
+Mar 23 19:21:54 conference.jitsi-00.zitovoice.com:muc_domain_mapper	info	Loading mod_muc_domain_mapper for host auth.jitsi-00.zitovoice.com!
+Mar 23 19:21:54 conference.jitsi-00.zitovoice.com:muc_domain_mapper	info	Loading mod_muc_domain_mapper for host conference.jitsi-00.zitovoice.com!
+Mar 23 19:21:54 conference.jitsi-00.zitovoice.com:muc_domain_mapper	info	Loading mod_muc_domain_mapper for host metadata.jitsi-00.zitovoice.com!
+Mar 23 19:21:54 conference.jitsi-00.zitovoice.com:tls	info	Certificates loaded
+Mar 23 19:21:54 modulemanager	error	Unable to load module 'polls': /usr/lib/prosody/modules/share/lua/5.2/mod_polls/mod_polls.lua: No such file or directory
+Mar 23 19:21:54 jitsi-00.zitovoice.com:muc_breakout_rooms	info	Hook to muc events on conference.jitsi-00.zitovoice.com
+Mar 23 19:21:54 metadata.jitsi-00.zitovoice.com:room_metadata_component	info	Hook to muc events on conference.jitsi-00.zitovoice.com
+Mar 23 19:21:54 avmoderation.jitsi-00.zitovoice.com:av_moderation_component	info	Hook to muc events on conference.jitsi-00.zitovoice.com
+Mar 23 19:21:54 speakerstats.jitsi-00.zitovoice.com:speakerstats_component	info	Conference component loaded conference.jitsi-00.zitovoice.com
+Mar 23 19:21:54 speakerstats.jitsi-00.zitovoice.com:speakerstats_component	info	Hook to muc events on conference.jitsi-00.zitovoice.com
+Mar 23 19:21:54 speakerstats.jitsi-00.zitovoice.com:speakerstats_component	info	Main muc service table: 0x559c151dabd0
+Mar 23 19:21:54 conference.jitsi-00.zitovoice.com:muc_domain_mapper	info	Loading mod_muc_domain_mapper for host breakout.jitsi-00.zitovoice.com!
+Mar 23 19:21:54 breakout.jitsi-00.zitovoice.com:tls	info	Certificates loaded
+Mar 23 19:21:54 breakout.jitsi-00.zitovoice.com:muc_domain_mapper	info	Loading mod_muc_domain_mapper for host avmoderation.jitsi-00.zitovoice.com!
+Mar 23 19:21:54 breakout.jitsi-00.zitovoice.com:muc_domain_mapper	info	Loading mod_muc_domain_mapper for host endconference.jitsi-00.zitovoice.com!
+Mar 23 19:21:54 breakout.jitsi-00.zitovoice.com:muc_domain_mapper	info	Loading mod_muc_domain_mapper for host jitsi-00.zitovoice.com!
+Mar 23 19:21:54 breakout.jitsi-00.zitovoice.com:muc_domain_mapper	info	Loading mod_muc_domain_mapper for host localhost!
+Mar 23 19:21:54 breakout.jitsi-00.zitovoice.com:muc_domain_mapper	info	Loading mod_muc_domain_mapper for host breakout.jitsi-00.zitovoice.com!
+Mar 23 19:21:54 breakout.jitsi-00.zitovoice.com:muc_domain_mapper	info	Loading mod_muc_domain_mapper for host lobby.jitsi-00.zitovoice.com!
+Mar 23 19:21:54 breakout.jitsi-00.zitovoice.com:muc_domain_mapper	info	Loading mod_muc_domain_mapper for host speakerstats.jitsi-00.zitovoice.com!
+Mar 23 19:21:54 breakout.jitsi-00.zitovoice.com:muc_domain_mapper	info	Loading mod_muc_domain_mapper for host focus.jitsi-00.zitovoice.com!
+Mar 23 19:21:54 breakout.jitsi-00.zitovoice.com:muc_domain_mapper	info	Loading mod_muc_domain_mapper for host internal.auth.jitsi-00.zitovoice.com!
+Mar 23 19:21:54 breakout.jitsi-00.zitovoice.com:muc_domain_mapper	info	Loading mod_muc_domain_mapper for host conferenceduration.jitsi-00.zitovoice.com!
+Mar 23 19:21:54 breakout.jitsi-00.zitovoice.com:muc_domain_mapper	info	Loading mod_muc_domain_mapper for host auth.jitsi-00.zitovoice.com!
+Mar 23 19:21:54 breakout.jitsi-00.zitovoice.com:muc_domain_mapper	info	Loading mod_muc_domain_mapper for host conference.jitsi-00.zitovoice.com!
+Mar 23 19:21:54 breakout.jitsi-00.zitovoice.com:muc_domain_mapper	info	Loading mod_muc_domain_mapper for host metadata.jitsi-00.zitovoice.com!
+Mar 23 19:21:54 metadata.jitsi-00.zitovoice.com:room_metadata_component	info	Hook to muc events on breakout.jitsi-00.zitovoice.com
+Mar 23 19:21:54 jitsi-00.zitovoice.com:muc_breakout_rooms	info	Breakout rooms component created breakout.jitsi-00.zitovoice.com
+Mar 23 19:21:54 jitsi-00.zitovoice.com:muc_breakout_rooms	info	Hook to muc events on breakout.jitsi-00.zitovoice.com
+Mar 23 19:21:54 speakerstats.jitsi-00.zitovoice.com:speakerstats_component	info	Breakout component loaded breakout.jitsi-00.zitovoice.com
+Mar 23 19:21:54 speakerstats.jitsi-00.zitovoice.com:speakerstats_component	info	Hook to muc events on breakout.jitsi-00.zitovoice.com
+Mar 23 19:21:54 c2s559c154702c0	info	Client connected
+Mar 23 19:21:54 c2s559c154702c0	info	Stream encrypted (TLSv1.3 with TLS_AES_256_GCM_SHA384)
+Mar 23 19:21:54 c2s559c154702c0	info	Client disconnected: connection closed
+Mar 23 19:21:54 c2s559c154604f0	info	Client connected
+Mar 23 19:21:55 c2s559c154604f0	info	Stream encrypted (TLSv1.3 with TLS_AES_256_GCM_SHA384)
+Mar 23 19:21:55 c2s559c154604f0	info	Client disconnected: connection closed
+Mar 23 19:21:55 c2s559c152c7da0	info	Client connected
+Mar 23 19:21:55 c2s559c152c7da0	info	Stream encrypted (TLSv1.3 with TLS_AES_256_GCM_SHA384)
+Mar 23 19:21:55 c2s559c152c7da0	info	Client disconnected: connection closed
+Mar 23 19:21:55 c2s559c153106c0	info	Client connected
+Mar 23 19:21:55 c2s559c153106c0	info	Stream encrypted (TLSv1.3 with TLS_AES_256_GCM_SHA384)
+Mar 23 19:21:55 c2s559c153106c0	info	Client disconnected: connection closed
+Mar 23 19:21:55 c2s559c15463600	info	Client connected
+Mar 23 19:21:55 mod_cron	info	Running periodic tasks
+Mar 23 19:21:55 c2s559c15463600	info	Stream encrypted (TLSv1.3 with TLS_AES_256_GCM_SHA384)
+Mar 23 19:21:55 c2s559c15463600	info	Client disconnected: connection closed
+Mar 23 19:21:55 c2s559c154472b0	info	Client connected
+Mar 23 19:21:55 c2s559c154472b0	info	Stream encrypted (TLSv1.3 with TLS_AES_256_GCM_SHA384)
+Mar 23 19:21:55 c2s559c154472b0	info	Client disconnected: connection closed
+Mar 23 19:21:55 c2s559c154c9f20	info	Client connected
+Mar 23 19:21:55 c2s559c154c9f20	info	Stream encrypted (TLSv1.3 with TLS_AES_256_GCM_SHA384)
+Mar 23 19:21:55 c2s559c154c9f20	info	Client disconnected: connection closed
+Mar 23 19:21:55 c2s559c154e46b0	info	Client connected
+Mar 23 19:21:56 c2s559c154e46b0	info	Stream encrypted (TLSv1.3 with TLS_AES_256_GCM_SHA384)
+Mar 23 19:21:56 c2s559c154e46b0	info	Client disconnected: connection closed
+Mar 23 19:21:56 c2s559c154fecd0	info	Client connected
+Mar 23 19:21:56 c2s559c154fecd0	info	Stream encrypted (TLSv1.3 with TLS_AES_256_GCM_SHA384)
+Mar 23 19:21:56 c2s559c154fecd0	info	Client disconnected: connection closed
+Mar 23 19:21:56 c2s559c1552aad0	info	Client connected
+Mar 23 19:21:56 c2s559c155365f0	info	Client connected
+Mar 23 19:21:56 c2s559c1552aad0	info	Stream encrypted (TLSv1.3 with TLS_AES_256_GCM_SHA384)
+Mar 23 19:21:56 c2s559c155365f0	info	Stream encrypted (TLSv1.3 with TLS_AES_256_GCM_SHA384)
+Mar 23 19:21:56 c2s559c1552aad0	info	Authenticated as jvb@auth.jitsi-00.zitovoice.com [prosody:member]
+Mar 23 19:21:56 auth.jitsi-00.zitovoice.com:limits_exception	info	Setting stanza size limits for jvb@auth.jitsi-00.zitovoice.com to 10485760
+Mar 23 19:21:56 c2s559c155365f0	info	Authenticated as focus@auth.jitsi-00.zitovoice.com [prosody:member]
+Mar 23 19:21:56 auth.jitsi-00.zitovoice.com:limits_exception	info	Setting stanza size limits for focus@auth.jitsi-00.zitovoice.com to 10485760
+Mar 23 19:21:56 stanzarouter	warn	Unhandled c2s_unbound stream element or stanza: resume; xmlns=urn:xmpp:sm:3: <resume xmlns='urn:xmpp:sm:3' xml:lang='en-US' previd='nIgWYXXBZ-cp' h='9'/>
+Mar 23 19:21:56 c2s559c155365f0	info	Client disconnected: connection closed
+Mar 23 19:21:56 c2s559c15547cd0	info	Client connected
+Mar 23 19:21:56 c2s559c15547cd0	info	Stream encrypted (TLSv1.3 with TLS_AES_256_GCM_SHA384)
+Mar 23 19:21:56 c2s559c15547cd0	info	Authenticated as focus@auth.jitsi-00.zitovoice.com [prosody:member]
+Mar 23 19:21:56 auth.jitsi-00.zitovoice.com:limits_exception	info	Setting stanza size limits for focus@auth.jitsi-00.zitovoice.com to 10485760
+Mar 23 20:21:55 mod_cron	info	Running periodic tasks
+Mar 23 21:21:55 mod_cron	info	Running periodic tasks
+Mar 23 22:21:55 mod_cron	info	Running periodic tasks
+Mar 23 23:21:55 mod_cron	info	Running periodic tasks
