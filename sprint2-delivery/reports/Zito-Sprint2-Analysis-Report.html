@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zito Jitsi Platform — Sprint 2 Analysis &amp; Execution Plan</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #0d1117;
+    color: #c9d1d9;
+    line-height: 1.7;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 60px 40px 120px;
+  }
+
+  .cover {
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 30%, #0f3460 60%, #1a1a2e 100%);
+    border-radius: 8px;
+    margin-bottom: 40px;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #21262d;
+  }
+
+  .cover::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(circle at 70% 30%, rgba(56, 189, 248, 0.15), transparent 60%),
+                radial-gradient(circle at 20% 80%, rgba(139, 92, 246, 0.12), transparent 50%);
+  }
+
+  .cover-text {
+    position: absolute;
+    bottom: 24px;
+    left: 32px;
+    z-index: 1;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    opacity: 0.6;
+  }
+
+  .cover-badge {
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    z-index: 1;
+    background: rgba(56, 189, 248, 0.15);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    color: #38bdf8;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 4px 12px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+  }
+
+  .title {
+    font-size: 34px;
+    font-weight: 700;
+    color: #f0f6fc;
+    margin-bottom: 6px;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+  }
+
+  .subtitle {
+    font-size: 15px;
+    color: #8b949e;
+    margin-bottom: 40px;
+    font-weight: 400;
+  }
+
+  .section-title {
+    font-size: 22px;
+    font-weight: 600;
+    color: #f0f6fc;
+    margin-top: 56px;
+    margin-bottom: 20px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #21262d;
+    letter-spacing: -0.3px;
+  }
+
+  .subsection-title {
+    font-size: 17px;
+    font-weight: 600;
+    color: #f0f6fc;
+    margin-top: 32px;
+    margin-bottom: 14px;
+  }
+
+  p { margin-bottom: 14px; }
+
+  .callout {
+    background: #161b22;
+    border-radius: 6px;
+    padding: 18px 20px;
+    margin: 20px 0;
+    font-size: 14px;
+    line-height: 1.7;
+    border: 1px solid #21262d;
+  }
+
+  .callout.green { background: #0d2818; border-left: 3px solid #2ea043; border-color: #21262d; border-left-color: #2ea043; }
+  .callout.blue { background: #0c1929; border-left: 3px solid #388bfd; border-color: #21262d; border-left-color: #388bfd; }
+  .callout.amber { background: #1c1a0e; border-left: 3px solid #d29922; border-color: #21262d; border-left-color: #d29922; }
+  .callout.red { background: #1f0c0c; border-left: 3px solid #f85149; border-color: #21262d; border-left-color: #f85149; }
+  .callout.purple { background: #170e26; border-left: 3px solid #8b5cf6; border-color: #21262d; border-left-color: #8b5cf6; }
+
+  .callout strong { color: #f0f6fc; }
+
+  pre {
+    background: #161b22;
+    color: #c9d1d9;
+    border-radius: 6px;
+    padding: 18px 22px;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    overflow-x: auto;
+    margin: 16px 0;
+    border: 1px solid #21262d;
+  }
+
+  pre .comment { color: #8b949e; }
+  pre .keyword { color: #ff7b72; }
+  pre .string { color: #a5d6ff; }
+  pre .property { color: #79c0ff; }
+  pre .value { color: #7ee787; }
+  pre .error { color: #f85149; }
+  pre .success { color: #3fb950; }
+  pre .highlight { color: #ffa657; }
+
+  code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    background: #1c2128;
+    padding: 2px 6px;
+    border-radius: 3px;
+    color: #79c0ff;
+    border: 1px solid #21262d;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+
+  th {
+    text-align: left;
+    padding: 10px 14px;
+    background: #161b22;
+    border-bottom: 1px solid #21262d;
+    font-weight: 500;
+    color: #8b949e;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid #21262d;
+    vertical-align: top;
+  }
+
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(56, 189, 248, 0.03); }
+
+  .status {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .status.live { background: rgba(46, 160, 67, 0.15); color: #3fb950; }
+  .status.pending { background: rgba(210, 153, 34, 0.15); color: #d29922; }
+  .status.critical { background: rgba(248, 81, 73, 0.15); color: #f85149; }
+  .status.done { background: rgba(56, 139, 253, 0.15); color: #388bfd; }
+  .status.new { background: rgba(139, 92, 246, 0.15); color: #a78bfa; }
+  .status.blocked { background: rgba(248, 81, 73, 0.15); color: #f85149; }
+
+  .divider {
+    height: 1px;
+    background: #21262d;
+    margin: 40px 0;
+  }
+
+  .toggle {
+    margin: 16px 0;
+    border: 1px solid #21262d;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .toggle summary {
+    padding: 12px 16px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 14px;
+    background: #161b22;
+    list-style: none;
+    color: #c9d1d9;
+  }
+
+  .toggle summary::before {
+    content: '\25B6';
+    display: inline-block;
+    margin-right: 10px;
+    font-size: 10px;
+    transition: transform 0.2s;
+    color: #8b949e;
+  }
+
+  .toggle[open] summary::before { transform: rotate(90deg); }
+
+  .toggle .toggle-content {
+    padding: 16px 20px;
+    border-top: 1px solid #21262d;
+    background: #0d1117;
+  }
+
+  .metric-row {
+    display: flex;
+    gap: 14px;
+    margin: 20px 0;
+  }
+
+  .metric {
+    flex: 1;
+    background: #161b22;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid #21262d;
+  }
+
+  .metric-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: #f0f6fc;
+    margin-bottom: 4px;
+  }
+
+  .metric-label {
+    font-size: 12px;
+    color: #8b949e;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .metric.green .metric-value { color: #3fb950; }
+  .metric.amber .metric-value { color: #d29922; }
+  .metric.red .metric-value { color: #f85149; }
+  .metric.blue .metric-value { color: #388bfd; }
+  .metric.purple .metric-value { color: #a78bfa; }
+
+  .timeline {
+    position: relative;
+    margin: 24px 0 24px 20px;
+    padding-left: 24px;
+    border-left: 2px solid #21262d;
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 20px;
+    padding-bottom: 4px;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -31px;
+    top: 6px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #21262d;
+    border: 2px solid #388bfd;
+  }
+
+  .timeline-item.done::before { border-color: #3fb950; background: #0d2818; }
+  .timeline-item.active::before { border-color: #d29922; background: #1c1a0e; }
+  .timeline-item.upcoming::before { border-color: #8b949e; background: #0d1117; }
+
+  .timeline-date {
+    font-size: 12px;
+    color: #8b949e;
+    font-weight: 500;
+    margin-bottom: 2px;
+  }
+
+  .timeline-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #f0f6fc;
+    margin-bottom: 4px;
+  }
+
+  .timeline-desc {
+    font-size: 13px;
+    color: #8b949e;
+  }
+
+  .risk-matrix {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 20px 0;
+  }
+
+  .risk-card {
+    background: #161b22;
+    border: 1px solid #21262d;
+    border-radius: 6px;
+    padding: 16px;
+  }
+
+  .risk-card.high { border-left: 3px solid #f85149; }
+  .risk-card.medium { border-left: 3px solid #d29922; }
+  .risk-card.low { border-left: 3px solid #3fb950; }
+
+  .risk-card h4 {
+    font-size: 13px;
+    font-weight: 600;
+    color: #f0f6fc;
+    margin-bottom: 6px;
+  }
+
+  .risk-card p {
+    font-size: 12px;
+    color: #8b949e;
+    margin-bottom: 0;
+  }
+
+  .chunk-card {
+    background: #161b22;
+    border: 1px solid #21262d;
+    border-radius: 6px;
+    padding: 16px 20px;
+    margin: 12px 0;
+  }
+
+  .chunk-card h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #f0f6fc;
+    margin-bottom: 6px;
+  }
+
+  .chunk-card .chunk-files {
+    font-size: 12px;
+    color: #79c0ff;
+    margin-bottom: 4px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .chunk-card .chunk-desc {
+    font-size: 13px;
+    color: #8b949e;
+  }
+
+  .chunk-card .chunk-outcome {
+    font-size: 12px;
+    color: #3fb950;
+    margin-top: 6px;
+    font-weight: 500;
+  }
+
+  .badge-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 8px 0;
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 500;
+  }
+
+  .badge.p0 { background: rgba(248, 81, 73, 0.15); color: #f85149; }
+  .badge.p1 { background: rgba(210, 153, 34, 0.15); color: #d29922; }
+  .badge.p2 { background: rgba(56, 139, 253, 0.15); color: #388bfd; }
+  .badge.config { background: rgba(139, 92, 246, 0.15); color: #a78bfa; }
+  .badge.security { background: rgba(248, 81, 73, 0.15); color: #f85149; }
+  .badge.infra { background: rgba(46, 160, 67, 0.15); color: #3fb950; }
+
+  .flow-diagram {
+    background: #161b22;
+    border: 1px solid #21262d;
+    border-radius: 6px;
+    padding: 20px;
+    margin: 16px 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    line-height: 1.5;
+    overflow-x: auto;
+    white-space: pre;
+    color: #8b949e;
+  }
+
+  .flow-diagram .node { color: #79c0ff; }
+  .flow-diagram .arrow { color: #484f58; }
+  .flow-diagram .label { color: #a78bfa; }
+  .flow-diagram .good { color: #3fb950; }
+  .flow-diagram .bad { color: #f85149; }
+
+  a { color: #388bfd; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .toc {
+    background: #161b22;
+    border: 1px solid #21262d;
+    border-radius: 6px;
+    padding: 20px 24px;
+    margin: 24px 0;
+  }
+
+  .toc h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #f0f6fc;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .toc ol {
+    padding-left: 20px;
+    margin: 0;
+  }
+
+  .toc li {
+    margin-bottom: 6px;
+    font-size: 14px;
+  }
+
+  .toc a {
+    color: #79c0ff;
+    text-decoration: none;
+  }
+
+  .toc a:hover { text-decoration: underline; }
+
+  .response-card {
+    background: #161b22;
+    border: 1px solid #21262d;
+    border-radius: 6px;
+    padding: 20px;
+    margin: 16px 0;
+  }
+
+  .response-card .response-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .response-card .response-number {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .response-card .response-number.green { background: rgba(46, 160, 67, 0.15); color: #3fb950; }
+  .response-card .response-number.amber { background: rgba(210, 153, 34, 0.15); color: #d29922; }
+  .response-card .response-number.blue { background: rgba(56, 139, 253, 0.15); color: #388bfd; }
+
+  .response-card .response-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #f0f6fc;
+  }
+
+  @media (max-width: 600px) {
+    .page { padding: 30px 20px 80px; }
+    .title { font-size: 26px; }
+    .metric-row { flex-direction: column; }
+    .risk-matrix { grid-template-columns: 1fr; }
+    .cover { height: 160px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-badge">SPRINT 2 PLANNING</div>
+  <div class="cover-text">theluckystrike &middot; zito-jitsi-project &middot; April 7 2026</div>
+</div>
+
+<div class="title">Zito Jitsi Platform</div>
+<div class="subtitle">Sprint 2 Analysis &mdash; Client Feedback Response, Root Cause Diagnosis, and Execution Plan</div>
+
+<!-- METRICS -->
+<div class="metric-row">
+  <div class="metric green">
+    <div class="metric-value">6</div>
+    <div class="metric-label">Issues Fixed (S1)</div>
+  </div>
+  <div class="metric amber">
+    <div class="metric-value">3</div>
+    <div class="metric-label">Client Feedback Items</div>
+  </div>
+  <div class="metric red">
+    <div class="metric-value">3</div>
+    <div class="metric-label">Exposed Secrets</div>
+  </div>
+  <div class="metric blue">
+    <div class="metric-value">9</div>
+    <div class="metric-label">Sprint 2 Chunks</div>
+  </div>
+</div>
+
+<!-- TABLE OF CONTENTS -->
+<div class="toc">
+  <h3>Contents</h3>
+  <ol>
+    <li><a href="#s1-recap">Sprint 1 Recap — What Was Delivered</a></li>
+    <li><a href="#client-feedback">Client Feedback Analysis — Derek's 3 Items</a></li>
+    <li><a href="#udp-diagnosis">UDP 10000 Root Cause Diagnosis</a></li>
+    <li><a href="#guest-domain">Guest Domain Implementation Specification</a></li>
+    <li><a href="#jigasi">Jigasi SIP Dial-In — Authentication Research</a></li>
+    <li><a href="#security">Security Assessment — Credential Exposure</a></li>
+    <li><a href="#execution-plan">Sprint 2 Execution Plan — Chunked Batches</a></li>
+    <li><a href="#risk-assessment">Risk Assessment</a></li>
+    <li><a href="#draft-response">Draft Response to Derek</a></li>
+  </ol>
+</div>
+
+<!-- ============================================ -->
+<!-- SECTION 1: SPRINT 1 RECAP -->
+<!-- ============================================ -->
+<h2 class="section-title" id="s1-recap">1. Sprint 1 Recap</h2>
+
+<p>Sprint 1 (March 22–April 1) took a non-functional Jitsi deployment and brought it to a live, working state. Six independent root-cause issues were identified and fixed on the production instance <code>jitsi-00.zitovoice.com</code>.</p>
+
+<table>
+  <tr><th>Issue</th><th>Root Cause</th><th>Status</th></tr>
+  <tr><td>config.js syntax error</td><td><code>var config.jwt = {}</code> above main config block</td><td><span class="status done">Fixed</span></td></tr>
+  <tr><td>JVB authentication failure</td><td>Credential mismatch between sip-communicator.properties and Prosody</td><td><span class="status done">Fixed</span></td></tr>
+  <tr><td>Jicofo startup race condition</td><td>Jicofo initializes before Prosody MUC component is ready</td><td><span class="status done">Fixed</span></td></tr>
+  <tr><td>Token auth disabled in Prosody</td><td>VirtualHost set to jitsi-anonymous, JWT config commented out</td><td><span class="status done">Fixed</span></td></tr>
+  <tr><td>coturn unconfigured</td><td>Default Debian template, all directives commented out</td><td><span class="status done">Fixed</span></td></tr>
+  <tr><td>NGINX routing loop</td><td>turn_backend pointing to FQDN instead of 127.0.0.1</td><td><span class="status done">Fixed</span></td></tr>
+</table>
+
+<h3 class="subsection-title">What Was NOT Delivered in Sprint 1</h3>
+
+<table>
+  <tr><th>Item</th><th>State</th><th>Notes</th></tr>
+  <tr><td>Guest domain (invite links)</td><td><span class="status pending">Diagnosed only</span></td><td>Root cause identified, solution designed, implementation deferred to Sprint 2</td></tr>
+  <tr><td>Branding (logo, favicon, colors)</td><td><span class="status pending">Partial</span></td><td>APP_NAME and PROVIDER_NAME set; watermark SVG, favicon, and color palette pending</td></tr>
+  <tr><td>Credential rotation</td><td><span class="status critical">Not started</span></td><td>3 secrets still in plaintext in public GitHub repo</td></tr>
+  <tr><td>Ansible consolidation</td><td><span class="status critical">Not started</span></td><td>All fixes on live only — playbook rebuild would reproduce original bugs</td></tr>
+  <tr><td>systemd startup ordering</td><td><span class="status pending">Not started</span></td><td>Reboot would break Jicofo</td></tr>
+  <tr><td>UDP 10000 investigation</td><td><span class="status pending">Not started</span></td><td>All media forced through TURN relay</td></tr>
+</table>
+
+<div class="callout amber">
+  <strong>Configuration drift warning:</strong> Every fix from Sprint 1 was applied directly to the live configuration files. The Ansible role templates have NOT been updated. Running any playbook right now would overwrite the working state and reintroduce all 6 original bugs.
+</div>
+
+<!-- ============================================ -->
+<!-- SECTION 2: CLIENT FEEDBACK -->
+<!-- ============================================ -->
+<h2 class="section-title" id="client-feedback">2. Client Feedback Analysis</h2>
+
+<p>Derek Anthony responded on Tuesday, April 7. His message contains three distinct items, each requiring a specific response and action.</p>
+
+<!-- ITEM 1 -->
+<div class="response-card">
+  <div class="response-header">
+    <div class="response-number amber">1</div>
+    <div class="response-title">Invite Link Still Requires Credentials</div>
+  </div>
+  <div class="badge-row">
+    <span class="badge p0">P0 — Blocking</span>
+    <span class="badge config">Config</span>
+  </div>
+  <p style="margin-top: 12px;">Derek confirms the "invite users" link still prompts for a user ID and password. He assumes work is in progress. This is the guest domain implementation — the solution was designed in Sprint 1 but never deployed.</p>
+  <p><strong>What Derek is saying:</strong> Status check. He is patient but wants confirmation this is being worked on.</p>
+  <p><strong>Required response:</strong> Confirm the 3-file guest domain implementation is the Sprint 2 priority. Provide the specific config changes.</p>
+</div>
+
+<!-- ITEM 2 -->
+<div class="response-card">
+  <div class="response-header">
+    <div class="response-number green">2</div>
+    <div class="response-title">UDP 10000 — Firewall Eliminated as Cause</div>
+  </div>
+  <div class="badge-row">
+    <span class="badge p0">P0 — Critical</span>
+    <span class="badge infra">Infrastructure</span>
+  </div>
+  <p style="margin-top: 12px;">Derek did thorough investigation and eliminated the firewall at every layer:</p>
+  <table>
+    <tr><th>Finding</th><th>What It Means</th></tr>
+    <tr><td>nftables allows UDP 10000 from 0.0.0.0/0</td><td>Local container firewall is open</td></tr>
+    <tr><td>No network-level firewalls blocking</td><td>Perimeter is open</td></tr>
+    <tr><td>No dropped packets in firewall logs</td><td>Packets pass through all firewall layers</td></tr>
+    <tr><td>Packets ARE arriving at port 10000</td><td>Full end-to-end delivery confirmed</td></tr>
+    <tr><td>Something IS listening on port 10000</td><td>A process has the socket bound</td></tr>
+    <tr><td>Packets receive NO responses</td><td>The listener is not processing them correctly</td></tr>
+  </table>
+  <p><strong>What Derek is asking:</strong> Does Michael have ideas on the root cause? If not, can they reboot? Who should do it?</p>
+  <p><strong>Required response:</strong> Provide the diagnosis (see <a href="#udp-diagnosis">Section 3</a>), propose diagnostic commands, then reboot only if the fix does not resolve it.</p>
+</div>
+
+<!-- ITEM 3 -->
+<div class="response-card">
+  <div class="response-header">
+    <div class="response-number blue">3</div>
+    <div class="response-title">Jigasi SIP Dial-In + Native Authentication</div>
+  </div>
+  <div class="badge-row">
+    <span class="badge p2">P2 — New Feature</span>
+    <span class="badge config">Architecture Decision</span>
+  </div>
+  <p style="margin-top: 12px;">Derek wants to add PSTN dial-in via Jigasi with their Asterisk server. His key question: <strong>Can Jitsi natively authenticate inbound SIP callers?</strong></p>
+  <p>He has a working test setup and provided the Asterisk dialplan pattern. He wants to avoid building a custom IVR authentication system if Jitsi can handle it natively.</p>
+  <p><strong>Required response:</strong> Honest answer — no native SIP caller auth. Present the available options (see <a href="#jigasi">Section 5</a>).</p>
+</div>
+
+<!-- ============================================ -->
+<!-- SECTION 3: UDP 10000 DIAGNOSIS -->
+<!-- ============================================ -->
+<h2 class="section-title" id="udp-diagnosis">3. UDP 10000 Root Cause Diagnosis</h2>
+
+<p>Derek's investigation eliminates the firewall at every layer. The remaining causes are all application-level — JVB is bound to the port but not processing packets correctly.</p>
+
+<h3 class="subsection-title">Ranked Causes</h3>
+
+<table>
+  <tr><th>#</th><th>Cause</th><th>Probability</th><th>Rationale</th></tr>
+  <tr>
+    <td>1</td>
+    <td><strong>STUN harvester returning wrong IP</strong></td>
+    <td><span class="status critical">HIGH</span></td>
+    <td>STUN server is local infrastructure — may discover container/bridge IP instead of 67.58.160.118. JVB advertises wrong ICE candidates and silently drops unmatched packets.</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td><strong>Incus proxy device without <code>nat=true</code></strong></td>
+    <td><span class="status critical">HIGH</span></td>
+    <td>Without NAT mode, source addresses are rewritten to host bridge IP. JVB can't correlate packets with ICE sessions.</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td><strong>JVB bound to IPv6 only</strong></td>
+    <td><span class="status pending">MEDIUM</span></td>
+    <td>JVB may bind to udp6 only. If <code>bindv6only=1</code> in the container, IPv4 packets are ignored.</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td><strong>JVB bound to wrong interface</strong></td>
+    <td><span class="status pending">MEDIUM</span></td>
+    <td>Multiple interfaces in the container — JVB may harvest addresses from non-routable interfaces.</td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td><strong>Non-functional JVB process holding port</strong></td>
+    <td><span class="status done">LOWER</span></td>
+    <td>JVB socket is bound but ICE stack not properly initialized. Possible after config change without clean restart.</td>
+  </tr>
+</table>
+
+<h3 class="subsection-title">Current Configuration (The Problem)</h3>
+
+<p>The current <code>sip-communicator.properties</code> uses STUN mapping harvester:</p>
+
+<pre><span class="comment"># Current — unreliable in containerized deployments</span>
+<span class="property">org.ice4j.ice.harvest.STUN_MAPPING_HARVESTER_ADDRESSES</span>=<span class="string">turn-jitsi-00.zitovoice.com:443</span></pre>
+
+<p>When the STUN server is reachable via an internal path (same infrastructure), the harvester discovers the <strong>wrong IP</strong> — typically the container's internal IP or the host's bridge IP. JVB then advertises incorrect ICE candidates. Even though packets arrive at port 10000, JVB cannot associate them with any valid ICE session and silently drops them.</p>
+
+<h3 class="subsection-title">The Fix</h3>
+
+<p>Replace STUN harvester with explicit static NAT harvester configuration:</p>
+
+<pre><span class="comment"># Disable STUN mapping (unreliable in LXC/Incus containers)</span>
+<span class="comment"># org.ice4j.ice.harvest.STUN_MAPPING_HARVESTER_ADDRESSES=turn-jitsi-00.zitovoice.com:443</span>
+
+<span class="comment"># Explicit NAT harvester — guaranteed correct</span>
+<span class="property">org.ice4j.ice.harvest.NAT_HARVESTER_LOCAL_ADDRESS</span>=<span class="value">&lt;container-internal-IP&gt;</span>
+<span class="property">org.ice4j.ice.harvest.NAT_HARVESTER_PUBLIC_ADDRESS</span>=<span class="value">67.58.160.118</span>
+
+<span class="comment"># Disable AWS harvester (not on AWS)</span>
+<span class="property">org.ice4j.ice.harvest.DISABLE_AWS_HARVESTER</span>=<span class="value">true</span></pre>
+
+<h3 class="subsection-title">Diagnostic Commands (Run Before Fixing)</h3>
+
+<pre><span class="comment"># Inside the container — identify what's listening</span>
+$ ss -ulnp | grep 10000
+$ cat /proc/sys/net/ipv6/bindv6only
+
+<span class="comment"># Check what IP JVB actually discovered</span>
+$ grep -iE "harvester|candidate|mapping|public.address" /var/log/jitsi/jvb.log | tail -80
+
+<span class="comment"># Check container network interfaces</span>
+$ ip addr show
+$ ip route show
+
+<span class="comment"># On the Incus host — check proxy device config</span>
+$ incus config device show jitsi-00
+$ incus config show jitsi-00 | grep -A 15 proxy</pre>
+
+<h3 class="subsection-title">Incus Proxy Device Issue</h3>
+
+<p>If UDP 10000 is forwarded via an Incus <code>proxy</code> device <strong>without</strong> <code>nat=true</code>, source addresses are rewritten to the host bridge IP before delivery to the container. JVB receives the packets but the source address no longer matches the remote client. ICE correlation fails.</p>
+
+<div class="flow-diagram"><span class="label">Without nat=true:</span>
+<span class="node">Client (1.2.3.4:54321)</span> <span class="arrow">──UDP──&gt;</span> <span class="node">Host:10000</span> <span class="arrow">──proxy──&gt;</span> <span class="node">Container:10000</span>
+                                                 <span class="bad">src rewritten to 10.0.0.1</span>
+                                                 <span class="bad">JVB sees src=10.0.0.1, not 1.2.3.4</span>
+                                                 <span class="bad">ICE candidate mismatch → packet dropped</span>
+
+<span class="label">With nat=true:</span>
+<span class="node">Client (1.2.3.4:54321)</span> <span class="arrow">──UDP──&gt;</span> <span class="node">Host:10000</span> <span class="arrow">──NAT──&gt;</span> <span class="node">Container:10000</span>
+                                                 <span class="good">src preserved as 1.2.3.4:54321</span>
+                                                 <span class="good">JVB correlates with ICE session → responds</span></div>
+
+<div class="callout blue">
+  <strong>Action plan:</strong> Run diagnostics first. If STUN harvester is returning wrong IP, apply the NAT harvester fix and restart JVB. If the Incus proxy device lacks <code>nat=true</code>, add it. Only reboot if neither fix resolves the issue — and let Derek's team handle the reboot since they own the infrastructure.
+</div>
+
+<!-- ============================================ -->
+<!-- SECTION 4: GUEST DOMAIN -->
+<!-- ============================================ -->
+<h2 class="section-title" id="guest-domain">4. Guest Domain Implementation</h2>
+
+<p>The invite link currently fails because Prosody rejects any connection without a JWT token. The solution is a <strong>guest VirtualHost</strong> with anonymous authentication on a dedicated subdomain. Moderators continue using token-authenticated URLs. Guests join through the plain invite link on the guest domain without needing a token.</p>
+
+<h3 class="subsection-title">Security Model</h3>
+
+<div class="flow-diagram"><span class="label">Moderator Flow (unchanged):</span>
+<span class="node">Token URL</span> <span class="arrow">──&gt;</span> <span class="node">jitsi-00.zitovoice.com</span> <span class="arrow">──JWT──&gt;</span> <span class="node">Prosody (token auth)</span> <span class="arrow">──&gt;</span> <span class="good">Room created</span>
+
+<span class="label">Guest Flow (new):</span>
+<span class="node">Invite Link</span> <span class="arrow">──&gt;</span> <span class="node">jitsi-00.zitovoice.com</span> <span class="arrow">──anon──&gt;</span> <span class="node">Prosody (guest domain)</span> <span class="arrow">──&gt;</span> <span class="good">Joins existing room</span>
+
+<span class="label">Security gate:</span>
+<span class="node">Jicofo</span> <span class="arrow">──enforces──&gt;</span> <span class="good">Room only exists while token-authenticated moderator is present</span>
+         <span class="arrow">──blocks──&gt;</span>  <span class="bad">Guests cannot create rooms or join empty rooms</span></div>
+
+<h3 class="subsection-title">Implementation — 3 Files</h3>
+
+<p><strong>File 1: Prosody</strong> — <code>/etc/prosody/conf.avail/jitsi-00.zitovoice.com.cfg.lua</code></p>
+
+<pre><span class="comment">-- Add new VirtualHost for guest access</span>
+<span class="keyword">VirtualHost</span> <span class="string">"guest.jitsi-00.zitovoice.com"</span>
+    <span class="property">authentication</span> = <span class="string">"anonymous"</span>
+    <span class="property">c2s_require_encryption</span> = <span class="value">false</span>
+    <span class="property">modules_enabled</span> = {
+        <span class="string">"bosh"</span>;
+        <span class="string">"ping"</span>;
+    }</pre>
+
+<p><strong>File 2: Jitsi Meet frontend</strong> — <code>/etc/jitsi/meet/jitsi-00.zitovoice.com-config.js</code></p>
+
+<pre><span class="property">hosts</span>: {
+    <span class="property">domain</span>: <span class="string">'jitsi-00.zitovoice.com'</span>,
+    <span class="property">anonymousdomain</span>: <span class="string">'guest.jitsi-00.zitovoice.com'</span>,
+    <span class="property">muc</span>: <span class="string">'conference.jitsi-00.zitovoice.com'</span>
+}</pre>
+
+<p><strong>File 3: Jicofo</strong> — <code>/etc/jitsi/jicofo/jicofo.conf</code></p>
+
+<pre><span class="keyword">jicofo</span> {
+    <span class="property">authentication</span>: {
+        <span class="property">enabled</span>: <span class="value">true</span>
+        <span class="property">type</span>: <span class="string">XMPP</span>
+        <span class="property">login-url</span>: <span class="string">"jitsi-00.zitovoice.com"</span>
+    }
+}</pre>
+
+<div class="callout green">
+  <strong>No open-access risk.</strong> The room only exists while a token-authenticated moderator is present. If the moderator leaves and no other authenticated user remains, the room closes. Guests cannot create rooms independently.
+</div>
+
+<h3 class="subsection-title">DNS Requirement</h3>
+
+<p>No DNS record is needed for <code>guest.jitsi-00.zitovoice.com</code>. This is a Prosody-internal virtual host — it never receives direct connections. All traffic flows through the main <code>jitsi-00.zitovoice.com</code> domain. The frontend config tells the Jitsi client which XMPP domain to use for unauthenticated users, and Prosody routes internally.</p>
+
+<!-- ============================================ -->
+<!-- SECTION 5: JIGASI -->
+<!-- ============================================ -->
+<h2 class="section-title" id="jigasi">5. Jigasi SIP Dial-In — Authentication Research</h2>
+
+<p>Derek's question: <em>"Is it possible to have Jitsi handle authentication of the SIP calls natively?"</em></p>
+
+<div class="callout amber">
+  <strong>Short answer: No.</strong> Jigasi does not have a built-in IVR, caller authentication system, or DTMF PIN prompt. It reads the <code>Jitsi-Conference-Room</code> SIP header and bridges audio to that room. No questions asked.
+</div>
+
+<h3 class="subsection-title">What Jigasi Does Support</h3>
+
+<p>Jigasi reads these SIP headers from inbound INVITEs (all configurable):</p>
+
+<table>
+  <tr><th>SIP Header</th><th>Purpose</th></tr>
+  <tr><td><code>Jitsi-Conference-Room</code></td><td>Target conference room name</td></tr>
+  <tr><td><code>Jitsi-Conference-Room-Pass</code></td><td>Room password (bypasses lobby)</td></tr>
+  <tr><td><code>Jitsi-Auth-Token</code></td><td>JWT authentication token</td></tr>
+  <tr><td><code>Jitsi-User-ID-Token</code></td><td>Authenticated user identity</td></tr>
+  <tr><td><code>Jitsi-Conference-Domain-Base</code></td><td>Multi-tenant domain base</td></tr>
+  <tr><td><code>Jitsi-Visitor</code></td><td>Visitor mode flag</td></tr>
+</table>
+
+<p>Jigasi also natively supports Jitsi's <strong>Lobby</strong> (waiting room) for SIP callers — when lobby is active, SIP callers hear "waiting for moderator review" and a web moderator can approve or reject them.</p>
+
+<h3 class="subsection-title">Available Options — Ranked by Effort</h3>
+
+<table>
+  <tr><th>Option</th><th>Effort</th><th>Description</th><th>Pros</th><th>Cons</th></tr>
+  <tr>
+    <td><strong>A. Lobby Mode</strong></td>
+    <td><span class="status live">Zero code</span></td>
+    <td>Enable lobby on rooms. SIP callers enter waiting room. Moderator approves/rejects.</td>
+    <td>Built into Jigasi natively. No custom code.</td>
+    <td>Requires human moderator for each caller. Not scalable for unattended rooms.</td>
+  </tr>
+  <tr>
+    <td><strong>B. Room Password via SIP Header</strong></td>
+    <td><span class="status done">Low</span></td>
+    <td>Set room password. Asterisk sends <code>Jitsi-Conference-Room-Pass</code> header.</td>
+    <td>Simple Asterisk dialplan change.</td>
+    <td>Password hardcoded unless collected from caller via AGI first.</td>
+  </tr>
+  <tr>
+    <td><strong>C. JWT via SIP Header</strong></td>
+    <td><span class="status pending">Medium</span></td>
+    <td>Asterisk AGI generates JWT based on CallerID lookup, sends as <code>Jitsi-Auth-Token</code>.</td>
+    <td>Strong auth. Integrates with Jitsi's secure domain model. Minimal IVR.</td>
+    <td>Requires JWT generation logic in Asterisk AGI. Caller identity verification still in Asterisk.</td>
+  </tr>
+  <tr>
+    <td><strong>D. Full IVR + Conference Mapper</strong></td>
+    <td><span class="status critical">High</span></td>
+    <td>Deploy Conference Mapper API. Build Asterisk IVR with DTMF PIN prompt.</td>
+    <td>Full commercial-grade dial-in experience.</td>
+    <td>Exactly the custom system Derek wants to avoid.</td>
+  </tr>
+</table>
+
+<h3 class="subsection-title">Recommended Approach</h3>
+
+<div class="callout blue">
+  <strong>Recommended: Option C (JWT via SIP Header)</strong> — The most pragmatic path if Derek wants automated authentication without building a full IVR. Asterisk does a CallerID-based lookup, an AGI script generates a JWT, and passes it as <code>Jitsi-Auth-Token</code> in the SIP INVITE. The "IVR" is just a Python/shell AGI script — not a full DTMF menu system. Jigasi passes the token through to Prosody, which validates it against the same JWT infrastructure already in place.
+</div>
+
+<pre><span class="comment">; Asterisk dialplan — JWT passthrough</span>
+<span class="keyword">exten</span> => _8145551212,1,<span class="highlight">AGI</span>(generate-jwt.py,${CALLERID(num)})
+<span class="keyword">exten</span> => _8145551212,n,<span class="highlight">SIPAddHeader</span>(Jitsi-Conference-Room:${ROOM}@conference.jitsi-00.zitovoice.com)
+<span class="keyword">exten</span> => _8145551212,n,<span class="highlight">SIPAddHeader</span>(Jitsi-Auth-Token:${JWT_TOKEN})
+<span class="keyword">exten</span> => _8145551212,n,<span class="highlight">Dial</span>(SIP/jigasi)</pre>
+
+<p>This approach reuses the existing JWT infrastructure from Sprint 1 — same <code>app_id</code>, same <code>app_secret</code>, same Prosody token validation. No new authentication system required.</p>
+
+<!-- ============================================ -->
+<!-- SECTION 6: SECURITY -->
+<!-- ============================================ -->
+<h2 class="section-title" id="security">6. Security Assessment</h2>
+
+<div class="callout red">
+  <strong>CRITICAL: 3 production secrets are exposed in a public GitHub repository.</strong><br>
+  The repo <code>theluckystrike/zito-jitsi-project</code> is <strong>public</strong> (visibility: false for private). The <code>raw-configs/</code> directory contains plaintext credentials that are (or were) active on the production server.
+</div>
+
+<table>
+  <tr><th>Secret</th><th>File</th><th>Risk</th></tr>
+  <tr>
+    <td>Jicofo XMPP password</td>
+    <td><code>raw-configs/jicofo.conf</code></td>
+    <td>An attacker could authenticate as the Jicofo focus component and manipulate conference state</td>
+  </tr>
+  <tr>
+    <td>JVB XMPP password</td>
+    <td><code>raw-configs/jvb-sip-communicator.properties</code></td>
+    <td>An attacker could authenticate as the video bridge and intercept or inject media streams</td>
+  </tr>
+  <tr>
+    <td>TURN shared secret</td>
+    <td><code>raw-configs/prosody-virtualhost.cfg.lua</code></td>
+    <td>An attacker could generate valid TURN credentials and use the relay for arbitrary traffic</td>
+  </tr>
+</table>
+
+<h3 class="subsection-title">Remediation Plan</h3>
+
+<ol style="padding-left: 20px; margin: 16px 0;">
+  <li style="margin-bottom: 8px;"><strong>Rotate all 3 secrets on the live server</strong> — generate new random credentials, update all service configurations, restart in correct order</li>
+  <li style="margin-bottom: 8px;"><strong>Remove raw-configs from the public repo</strong> — or make the repo private</li>
+  <li style="margin-bottom: 8px;"><strong>Scrub git history</strong> — the secrets exist in prior commits even if the files are deleted from HEAD</li>
+  <li style="margin-bottom: 8px;"><strong>Verify no unauthorized access occurred</strong> — check Prosody auth logs for unrecognized XMPP connections</li>
+</ol>
+
+<pre><span class="comment"># Credential rotation sequence</span>
+<span class="comment"># 1. Generate new secrets</span>
+$ JICOFO_PASS=$(openssl rand -hex 16)
+$ JVB_PASS=$(openssl rand -hex 32)
+$ TURN_SECRET=$(openssl rand -hex 32)
+
+<span class="comment"># 2. Update Prosody user passwords</span>
+$ prosodyctl register focus auth.jitsi-00.zitovoice.com "$JICOFO_PASS"
+$ prosodyctl register jvb auth.jitsi-00.zitovoice.com "$JVB_PASS"
+
+<span class="comment"># 3. Update config files</span>
+<span class="comment"># /etc/jitsi/jicofo/jicofo.conf → xmpp.client.password</span>
+<span class="comment"># /etc/jitsi/videobridge/sip-communicator.properties → PASSWORD</span>
+<span class="comment"># /etc/prosody/conf.avail/...cfg.lua → TURN secret</span>
+<span class="comment"># /etc/turnserver.conf → static-auth-secret</span>
+
+<span class="comment"># 4. Ordered restart</span>
+$ systemctl restart prosody &amp;&amp; sleep 5
+$ systemctl restart jicofo &amp;&amp; sleep 5
+$ systemctl restart jitsi-videobridge2 &amp;&amp; sleep 3
+$ systemctl restart coturn</pre>
+
+<!-- ============================================ -->
+<!-- SECTION 7: EXECUTION PLAN -->
+<!-- ============================================ -->
+<h2 class="section-title" id="execution-plan">7. Sprint 2 Execution Plan</h2>
+
+<p>Work is decomposed into 3 batches with 9 atomic chunks. Each chunk has a single objective and a measurable outcome. Chunks execute serially — chunk N+1 does not start until chunk N is verified.</p>
+
+<h3 class="subsection-title">Batch 1 — Infrastructure Stability (P0)</h3>
+<p>Fix the two production-blocking issues: UDP 10000 and guest domain.</p>
+
+<div class="chunk-card">
+  <h4>Chunk 1.1 — UDP 10000 Diagnostics</h4>
+  <div class="chunk-files">sip-communicator.properties, jvb.conf, jvb.log</div>
+  <div class="chunk-desc">SSH into jitsi-00. Run diagnostic commands (ss, ip addr, bindv6only, JVB log harvester grep). On Incus host, check proxy device config. Capture all output.</div>
+  <div class="chunk-outcome">Outcome: Root cause confirmed with evidence. Fix path identified.</div>
+</div>
+
+<div class="chunk-card">
+  <h4>Chunk 1.2 — UDP 10000 Fix</h4>
+  <div class="chunk-files">sip-communicator.properties</div>
+  <div class="chunk-desc">Replace STUN harvester with explicit NAT_HARVESTER_LOCAL_ADDRESS and NAT_HARVESTER_PUBLIC_ADDRESS. Disable AWS harvester. If Incus proxy device lacks nat=true, add it. Restart JVB. Test with a real call and verify ICE candidates in chrome://webrtc-internals/.</div>
+  <div class="chunk-outcome">Outcome: JVB responds to UDP 10000 packets. Media flows directly without TURN relay.</div>
+</div>
+
+<div class="chunk-card">
+  <h4>Chunk 1.3 — Guest Domain Implementation</h4>
+  <div class="chunk-files">prosody-virtualhost.cfg.lua, config.js, jicofo.conf</div>
+  <div class="chunk-desc">Add guest VirtualHost to Prosody. Add anonymousdomain to Jitsi Meet config. Enable authentication gating in Jicofo. Restart services in correct order. Test: create room as moderator, copy invite link, open in incognito — guest should join without credentials.</div>
+  <div class="chunk-outcome">Outcome: Invite links work without tokens. Guests join existing rooms. Empty rooms cannot be created by guests.</div>
+</div>
+
+<h3 class="subsection-title">Batch 2 — Security Hardening (P0)</h3>
+<p>Eliminate the credential exposure and harden the deployment.</p>
+
+<div class="chunk-card">
+  <h4>Chunk 2.1 — Credential Rotation</h4>
+  <div class="chunk-files">jicofo.conf, sip-communicator.properties, prosody-virtualhost.cfg.lua, turnserver.conf</div>
+  <div class="chunk-desc">Generate 3 new secrets. Update Prosody user registrations. Update all 4 config files. Restart all services in order. Verify XMPP connections succeed with new credentials. Check Prosody logs for auth failures.</div>
+  <div class="chunk-outcome">Outcome: All 3 old secrets are invalidated. Services running with new credentials.</div>
+</div>
+
+<div class="chunk-card">
+  <h4>Chunk 2.2 — GitHub Repo Cleanup</h4>
+  <div class="chunk-files">GitHub repo: theluckystrike/zito-jitsi-project</div>
+  <div class="chunk-desc">Remove raw-configs directory from repo. Scrub secrets from git history (git filter-repo or BFG). Update README to document config file locations without including actual secrets. Force push cleaned history. Alternatively, make repo private.</div>
+  <div class="chunk-outcome">Outcome: No production secrets accessible in any commit of the public repo.</div>
+</div>
+
+<h3 class="subsection-title">Batch 3 — Operational Resilience (P1)</h3>
+<p>Ensure the system survives reboots and can be rebuilt from automation.</p>
+
+<div class="chunk-card">
+  <h4>Chunk 3.1 — systemd Startup Ordering</h4>
+  <div class="chunk-files">/etc/systemd/system/jicofo.service.d/override.conf, /etc/systemd/system/jitsi-videobridge2.service.d/override.conf</div>
+  <div class="chunk-desc">Create systemd drop-in overrides enforcing Prosody → Jicofo → JVB startup sequence. Test by rebooting jitsi-00 (coordinate with Derek). Verify all services start correctly without manual intervention.</div>
+  <div class="chunk-outcome">Outcome: System recovers cleanly from reboot. No manual restart sequence needed.</div>
+</div>
+
+<div class="chunk-card">
+  <h4>Chunk 3.2 — Branding Pass</h4>
+  <div class="chunk-files">interface_config.js, custom CSS, watermark SVG, favicon</div>
+  <div class="chunk-desc">Swap default Jitsi watermark SVG for Zito logo variant. Replace favicon. Apply color codes from Logo Policy PDF to toolbar backgrounds, button accents, and welcome page. Follow policy guidelines for logo usage.</div>
+  <div class="chunk-outcome">Outcome: All Zito branding applied. Visual identity matches Logo Policy PDF.</div>
+</div>
+
+<div class="chunk-card">
+  <h4>Chunk 3.3 — Ansible Consolidation</h4>
+  <div class="chunk-files">Ansible role templates (on deployment controller)</div>
+  <div class="chunk-desc">Update all Ansible role templates to match the current live configuration. Include: fixed config.js, correct Prosody auth settings, JVB credentials, coturn config, NGINX routing, guest domain, systemd overrides, branding assets. Test by building a fresh container and verifying it matches the live state.</div>
+  <div class="chunk-outcome">Outcome: Running the full playbook chain produces a working system identical to the live instance.</div>
+</div>
+
+<div class="chunk-card">
+  <h4>Chunk 3.4 — Jigasi Research Response</h4>
+  <div class="chunk-files">N/A — communication deliverable</div>
+  <div class="chunk-desc">Prepare a clear, honest response to Derek about Jigasi's native SIP authentication capabilities. Present the 4 options ranked by effort. Recommend Option C (JWT via SIP header). Include the Asterisk AGI pattern. This is not implementation — it's a scoped recommendation for Derek to evaluate.</div>
+  <div class="chunk-outcome">Outcome: Derek has the information needed to make an architectural decision on SIP dial-in auth.</div>
+</div>
+
+<h3 class="subsection-title">Execution Order and Dependencies</h3>
+
+<div class="flow-diagram"><span class="label">Batch 1 (Infrastructure — BLOCKING):</span>
+<span class="node">1.1 UDP Diagnostics</span> <span class="arrow">──&gt;</span> <span class="node">1.2 UDP Fix</span> <span class="arrow">──&gt;</span> <span class="node">1.3 Guest Domain</span>
+
+<span class="label">Batch 2 (Security — after Batch 1):</span>
+<span class="node">2.1 Credential Rotation</span> <span class="arrow">──&gt;</span> <span class="node">2.2 Repo Cleanup</span>
+
+<span class="label">Batch 3 (Resilience — after Batch 2):</span>
+<span class="node">3.1 systemd Overrides</span> <span class="arrow">──&gt;</span> <span class="node">3.2 Branding</span> <span class="arrow">──&gt;</span> <span class="node">3.3 Ansible</span>
+
+<span class="label">Parallel (no dependencies):</span>
+<span class="node">3.4 Jigasi Response</span> <span class="good">(can execute any time)</span></div>
+
+<!-- ============================================ -->
+<!-- SECTION 8: RISK ASSESSMENT -->
+<!-- ============================================ -->
+<h2 class="section-title" id="risk-assessment">8. Risk Assessment</h2>
+
+<div class="risk-matrix">
+  <div class="risk-card high">
+    <h4>Credential Exposure (ACTIVE)</h4>
+    <p>3 production secrets in a public GitHub repo. Anyone with the URL can extract them. Must be rotated regardless of whether the repo is made private — the secrets are already compromised.</p>
+  </div>
+  <div class="risk-card high">
+    <h4>Configuration Drift</h4>
+    <p>Running any Ansible playbook before consolidation will overwrite the working state and reintroduce all 6 original bugs. Derek's team must be warned not to run playbooks.</p>
+  </div>
+  <div class="risk-card medium">
+    <h4>Reboot Fragility</h4>
+    <p>Without systemd overrides, a reboot causes Jicofo to fail permanently. Manual restart sequence is required. Derek's testing may trigger a reboot.</p>
+  </div>
+  <div class="risk-card medium">
+    <h4>TURN Scalability</h4>
+    <p>Until UDP 10000 is fixed, all media flows through TURN relay. Works for small meetings but will not scale to hundreds of concurrent calls — which is Zito's target for residential subscribers.</p>
+  </div>
+</div>
+
+<!-- ============================================ -->
+<!-- SECTION 9: DRAFT RESPONSE -->
+<!-- ============================================ -->
+<h2 class="section-title" id="draft-response">9. Draft Response to Derek</h2>
+
+<p>Below is a structured draft response addressing all 3 of Derek's feedback items. This should be reviewed and personalized before sending.</p>
+
+<div class="callout purple">
+
+<p><strong>Re: Item 1 — Invite Links</strong></p>
+<p>Confirmed, this is the top priority for the Sprint 2 session. The fix is the guest VirtualHost pattern I described in the last update — it touches three files (Prosody, Jitsi Meet config, Jicofo) and does not require any DNS changes. It will be functional after the next session. Moderators continue using token-authenticated URLs, guests join through the plain invite link without credentials, and the room only exists while a moderator is present.</p>
+
+<p><strong>Re: Item 2 — UDP 10000</strong></p>
+<p>Thank you for the thorough investigation — that eliminates the firewall at every layer and narrows it significantly. Based on the symptoms (packets arriving, something listening, no responses), the most likely cause is a JVB NAT harvester misconfiguration. The current config uses a STUN mapping harvester pointed at the local TURN server, which in a containerized deployment often discovers the container's internal IP instead of the public IP 67.58.160.118. JVB then advertises wrong ICE candidates and silently drops packets it cannot associate with any session.</p>
+
+<p>The fix is replacing the STUN harvester with explicit static NAT harvester addresses in sip-communicator.properties. I will also check the Incus proxy device configuration on the host — if the UDP 10000 proxy device does not have nat=true set, source addresses get rewritten and JVB cannot correlate packets with ICE sessions.</p>
+
+<p>I would like to run diagnostics first (ss, ip addr, JVB log harvester output, Incus device config) before rebooting. If the NAT harvester fix does not resolve it, then a reboot is the right next step — your team should handle that since you own the infrastructure. I will coordinate timing.</p>
+
+<p><strong>Re: Item 3 — Jigasi SIP Dial-In Authentication</strong></p>
+<p>Jigasi does not natively authenticate inbound SIP callers. It reads the Jitsi-Conference-Room header and bridges to that room — no questions asked. However, it does support several SIP headers that enable passthrough authentication.</p>
+
+<p>The most pragmatic option that avoids a full IVR build: Asterisk performs a CallerID-based lookup, a small AGI script generates a JWT using the same app_id and app_secret already configured in Prosody, and passes it as a Jitsi-Auth-Token SIP header. Jigasi passes the token through to Prosody, which validates it. This reuses the existing JWT infrastructure with no new authentication system required.</p>
+
+<p>For an even simpler interim option, Jigasi natively supports Jitsi's Lobby (waiting room) for SIP callers — when lobby is enabled on a room, SIP callers hear "waiting for moderator review" and a web moderator can approve or reject them. Zero custom code, but requires a human moderator.</p>
+
+<p>I will prepare a more detailed writeup on the options with the tradeoffs so your team can evaluate the right approach for your architecture.</p>
+
+</div>
+
+<!-- FOOTER -->
+<div class="divider"></div>
+
+<p style="font-size: 13px; color: #484f58; text-align: center;">
+  theluckystrike &middot; zito-jitsi-project &middot; Sprint 2 Analysis &middot; Generated April 7, 2026<br>
+  <a href="https://github.com/theluckystrike/zito-jitsi-project">github.com/theluckystrike/zito-jitsi-project</a>
+</p>
+
+</div>
+</body>
+</html>
